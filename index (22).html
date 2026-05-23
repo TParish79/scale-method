@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The SCALE Method&trade; — Free Growth Scorecard</title>
+  <meta name="description" content="Take the free SCALE Method Growth Scorecard. Score your business across all five phases and get your 30-day roadmap." />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style> html,body { margin:0; padding:0; } </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+
+/* ============================ DATA ============================ */
+
+const PHASES = [
+  {
+    letter: "S",
+    name: "Strategy",
+    days: "Days 1–7",
+    intro: "Before you can grow, you need to know exactly where you're going and why customers should follow you there. These five questions assess your strategic foundation.",
+    costStatement: "Without a clear direction, every action you take costs more than it should.",
+    questions: [
+      "I have a specific, written revenue goal for the next 90 days — not a range, not a wish. A number with a deadline.",
+      "I can describe my ideal customer in precise detail: their exact problem, what they're willing to pay to solve it, and why they choose me instead of a competitor.",
+      "My business has a clear competitive differentiator — and my customers could articulate what makes me different without being prompted.",
+      "I have a written growth roadmap that breaks my revenue target into specific weekly actions. I'm not just figuring it out as I go.",
+      "I spend the majority of my working time on growth-driving activities — not just fulfilling what I already sold.",
+    ],
+  },
+  {
+    letter: "C",
+    name: "Customer",
+    days: "Days 8–14",
+    intro: "Most businesses bleed revenue through customer loss they never even track. These questions reveal how well you're protecting and growing the customers you already have.",
+    costStatement: "You're spending to acquire customers your business isn't built to keep.",
+    questions: [
+      "I have a deliberate customer retention system — not just good service, but a defined process designed to keep customers coming back.",
+      "I know my average customer lifetime value (CLV), and I have an active plan to increase it.",
+      "My business delivers a personalized experience that makes customers feel seen — not just a name-merge in an email.",
+      "I have a structured process that turns satisfied customers into active referral sources. It runs consistently, not just when I remember to ask.",
+      "I track customer churn. I know why customers leave, and I have a process to catch them before they're gone.",
+    ],
+  },
+  {
+    letter: "A",
+    name: "Action",
+    days: "Days 15–21",
+    intro: "Awareness and revenue don't happen by accident. These questions assess whether your growth engine is actually running — or just idling.",
+    costStatement: "Your strategy is sound but your revenue engine isn't running consistently enough to scale.",
+    questions: [
+      "I have at least one repeatable, scalable marketing campaign running right now — not occasional posts or one-off promotions.",
+      "I have a documented sales process that converts leads consistently — regardless of who handles the conversation or what day it is.",
+      "I actively upsell and cross-sell to existing customers. It's built into my process — not something I do when I think of it.",
+      "I have at least one active strategic partnership that generates qualified leads or direct revenue.",
+      "I know my current customer acquisition cost (CAC) and I know whether that number is sustainable — or a problem — at the volume I want to reach.",
+    ],
+  },
+  {
+    letter: "L",
+    name: "Leverage",
+    days: "Days 22–25",
+    intro: "If your business requires you to be present for everything to work, it doesn't scale — it just follows you around. These questions expose whether you've built a system or a dependency.",
+    costStatement: "Your business doesn't scale because it still depends on you for everything.",
+    questions: [
+      "My business could run for one full week without me making every decision. The systems and people are in place.",
+      "The core processes in my business are documented — not just stored in my head or dependent on one person who can't be replaced.",
+      "Repetitive, low-value tasks in my business are automated or fully delegated. I am not doing $15-an-hour work.",
+      "My team or contractors are clear on their roles and can execute without requiring constant direction or correction from me.",
+      "My operations could handle double my current volume without breaking. The systems, capacity, and quality would hold.",
+    ],
+  },
+  {
+    letter: "E",
+    name: "Endurance",
+    days: "Days 26–30",
+    intro: "Growth that stops when you stop pushing isn't a business — it's a treadmill. These questions assess whether you've built something with lasting momentum.",
+    costStatement: "You can generate growth, but you haven't built the systems to sustain it.",
+    questions: [
+      "My brand has a clear, consistent identity across every channel. A customer would recognize it instantly — even without my name attached.",
+      "I have an active feedback loop: I collect, analyze, and act on customer data regularly. It influences real decisions, not just reports.",
+      "I'm building long-term authority in my market — not just generating transactions. My brand is bigger than my last campaign.",
+      "I have a post-growth plan. My business doesn't depend on one launch, one channel, or one client relationship to sustain revenue.",
+      "I track the metrics that actually matter for scale. I use my numbers to make decisions — not just to see how last month went.",
+    ],
+  },
+];
+
+const SCALE_OPTIONS = [
+  { value: 1, label: "Not at all true" },
+  { value: 2, label: "Rarely true" },
+  { value: 3, label: "Sometimes true" },
+  { value: 4, label: "Mostly true" },
+  { value: 5, label: "Completely true" },
+];
+
+const BANDS = [
+  {
+    min: 0, max: 40, label: "Unstable Foundation",
+    headline: "Your business has serious structural gaps. Scaling right now would make the problems bigger, not better.",
+    body: "Your score tells a clear story: the core systems aren't in place yet. Most businesses at this stage are running on hustle and reaction, not structure and strategy. The SCALE Method gives you a complete 30-day path — phase by phase — to build what's missing and make growth sustainable.",
+    cta: "Close These Gaps in 30 Days",
+    ctaSub: "The complete 30-day system. Work every phase. Build it right.",
+  },
+  {
+    min: 41, max: 65, label: "Building Momentum",
+    headline: "You've got real traction — but multiple phases are quietly capping your growth.",
+    body: "There are parts of your business working well. But your results show significant gaps across several phases of the SCALE framework — and gaps compound. Growth at this stage feels inconsistent because you're strong in some areas and exposed in others. The SCALE Method works all five phases in sequence, so nothing gets left behind.",
+    cta: "Close These Gaps in 30 Days",
+    ctaSub: "The complete 30-day system. Every phase. No gaps.",
+  },
+  {
+    min: 66, max: 84, label: "Actively Scaling",
+    headline: "You're operating above most businesses at your stage — but gaps remain across multiple phases.",
+    body: "Your foundation is solid. But your results show there's still real ground to cover in several phases — and at this level, those gaps are the difference between steady growth and a business that truly scales. The SCALE Method is the complete system to close them all, in the right order.",
+    cta: "Close These Gaps in 30 Days",
+    ctaSub: "The complete 30-day system. Close every gap. Reach the next level.",
+  },
+  {
+    min: 85, max: 100, label: "Scale-Ready",
+    headline: "Your systems are strong — but even one weak phase limits what the whole system can do.",
+    body: "This is a high score, and it reflects real operational maturity. At this level, the SCALE Method isn't about fixing what's broken — it's about optimizing every phase so the whole system runs at full capacity. Marginal gains here compound faster than anywhere else.",
+    cta: "Close These Gaps in 30 Days",
+    ctaSub: "The complete 30-day system. Optimize every phase. No ceiling.",
+  },
+];
+
+/* ============================ HELPERS ============================ */
+
+function getBand(score) {
+  return BANDS.find((b) => score >= b.min && score <= b.max) || BANDS[0];
+}
+
+function getPhaseScore(answers, phaseIdx) {
+  const start = phaseIdx * 5;
+  const raw = answers.slice(start, start + 5).reduce((a, b) => a + (b || 0), 0);
+  return Math.round((raw / 25) * 100);
+}
+
+function getWeakestPhase(phaseScores) {
+  let minIdx = 0;
+  for (let i = 1; i < phaseScores.length; i++) {
+    if (phaseScores[i] < phaseScores[minIdx]) minIdx = i;
+  }
+  return minIdx;
+}
+
+/* Build the step sequence: start → (phase-intro → 5 questions) ×5 → capture → results */
+function buildSteps() {
+  const steps = [{ type: "start" }];
+  PHASES.forEach((_, p) => {
+    steps.push({ type: "phase-intro", phase: p });
+    for (let q = 0; q < 5; q++) steps.push({ type: "question", phase: p, qIndex: p * 5 + q, localQ: q });
+  });
+  steps.push({ type: "capture" });
+  steps.push({ type: "results" });
+  return steps;
+}
+
+const STEPS = buildSteps();
+
+/* ============================ ANIMATED NUMBER ============================ */
+
+function AnimatedNumber({ value, duration = 1300 }) {
+  const [display, setDisplay] = useState(0);
+  const startRef = useRef(null);
+  const frameRef = useRef(null);
+  useEffect(() => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    const start = display;
+    startRef.current = null;
+    const animate = (ts) => {
+      if (!startRef.current) startRef.current = ts;
+      const elapsed = ts - startRef.current;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(start + (value - start) * eased));
+      if (progress < 1) frameRef.current = requestAnimationFrame(animate);
+    };
+    frameRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [value]);
+  return <>{display}</>;
+}
+
+/* ============================ PHASE BAR ============================ */
+
+function PhaseBar({ phase, score, isWeakest, needsWork, index }) {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setWidth(score), 200 + index * 130);
+    return () => clearTimeout(t);
+  }, [score, index]);
+  const isOrange = needsWork;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "10px 0", borderBottom: "1px solid rgba(26,58,108,0.08)" }}>
+      <div style={{
+        minWidth: "36px", height: "36px", borderRadius: "6px",
+        background: isOrange ? "#E8703A" : "#1A3A6C",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontFamily: "'Oswald', sans-serif", fontSize: "16px", fontWeight: 700,
+        color: "#fff", flexShrink: 0, position: "relative",
+      }}>
+        {phase.letter}
+        {isWeakest && <div style={{ position: "absolute", top: "-4px", right: "-4px", width: "10px", height: "10px", borderRadius: "50%", background: "#fff", border: "2px solid #E8703A" }} />}
+      </div>
+      <div style={{ minWidth: "84px", flexShrink: 0 }}>
+        <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "13px", fontWeight: 600, color: isOrange ? "#E8703A" : "#1A3A6C", letterSpacing: "0.05em", textTransform: "uppercase", lineHeight: 1.2 }}>{phase.name}</div>
+        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#8a9ab5", marginTop: "2px" }}>{phase.days}</div>
+      </div>
+      <div style={{ flex: 1, height: "10px", background: "rgba(26,58,108,0.08)", borderRadius: "99px", overflow: "hidden" }}>
+        <div style={{ height: "100%", width: `${width}%`, background: isOrange ? "linear-gradient(90deg, #E8703A, #f09060)" : "linear-gradient(90deg, #1A3A6C, #2d5fa8)", borderRadius: "99px", transition: "width 0.9s cubic-bezier(0.22,1,0.36,1)" }} />
+      </div>
+      <div style={{ minWidth: "34px", textAlign: "right", fontFamily: "'Oswald', sans-serif", fontSize: "16px", fontWeight: 700, color: isOrange ? "#E8703A" : "#1A3A6C", flexShrink: 0 }}>{score}</div>
+    </div>
+  );
+}
+
+/* ============================ MAIN ============================ */
+
+function ScaleScorecard() {
+  const [stepIndex, setStepIndex] = useState(0);
+  const [answers, setAnswers] = useState(Array(25).fill(null));
+  const [form, setForm] = useState({ name: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [pending, setPending] = useState(null); // for selection highlight before advance
+  const [direction, setDirection] = useState("fwd");
+
+  const step = STEPS[stepIndex];
+  const answeredCount = answers.filter((a) => a !== null).length;
+
+  const goNext = () => { setDirection("fwd"); setStepIndex((i) => Math.min(i + 1, STEPS.length - 1)); };
+  const goBack = () => { setDirection("back"); setStepIndex((i) => Math.max(i - 1, 0)); };
+
+  const selectAnswer = (qIndex, value) => {
+    setPending(value);
+    const next = [...answers];
+    next[qIndex] = value;
+    setAnswers(next);
+    setTimeout(() => { setPending(null); goNext(); }, 340);
+  };
+
+  // computed results
+  const phaseScores = PHASES.map((_, p) => getPhaseScore(answers, p));
+  const overallScore = Math.round(answers.reduce((a, b) => a + (b || 0), 0) / 125 * 100);
+  const weakestIdx = getWeakestPhase(phaseScores);
+  const band = getBand(overallScore);
+  const phasesNeedingWork = phaseScores.filter((s) => s < 90).length;
+
+  // gauge arc
+  const radius = 54, cx = 70, cy = 70, startAngle = -210, sweepAngle = 240;
+  const toRad = (d) => (d * Math.PI) / 180;
+  const arcPath = (pct) => {
+    const sweep = sweepAngle * pct;
+    const s = toRad(startAngle), e = toRad(startAngle + sweep);
+    const x1 = cx + radius * Math.cos(s), y1 = cy + radius * Math.sin(s);
+    const x2 = cx + radius * Math.cos(e), y2 = cy + radius * Math.sin(e);
+    return `M ${x1} ${y1} A ${radius} ${radius} 0 ${sweep > 180 ? 1 : 0} 1 ${x2} ${y2}`;
+  };
+
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+
+  // Send the lead to our Cloudflare Pages Function (/api/subscribe), which forwards it
+  // to MailerLite and drops the person into the group for their weakest phase.
+  // NOTE: the user always advances to their results, even if this call fails — a network
+  // hiccup should never trap someone behind a broken form. That means you cannot tell
+  // from this screen whether capture succeeded; confirm by checking your MailerLite
+  // subscribers list instead (see the README).
+  const handleCaptureSubmit = async () => {
+    if (!emailValid || !form.name.trim() || submitting) return;
+    setSubmitting(true);
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      overallScore,
+      band: band.label,
+      weakestPhase: PHASES[weakestIdx].name,         // e.g. "Leverage" — used to pick the group
+      weakestPhaseLetter: PHASES[weakestIdx].letter,  // e.g. "L"
+      phaseScores: PHASES.reduce((acc, p, i) => { acc[p.name] = phaseScores[i]; return acc; }, {}),
+    };
+    try {
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.error("Lead submission failed:", err);
+    } finally {
+      setSubmitting(false);
+      goNext();
+    }
+  };
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0f2347; }
+        .sc-root {
+          min-height: 100vh;
+          background: linear-gradient(160deg, #0f2347 0%, #1A3A6C 100%);
+          font-family: 'DM Sans', sans-serif;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          padding: 40px 16px;
+        }
+        .sc-topbar {
+          width: 100%; max-width: 640px;
+          padding: 20px 4px 16px;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .sc-wordmark {
+          font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 700;
+          letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.85);
+        }
+        .sc-progress-text {
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+          color: rgba(255,255,255,0.45); letter-spacing: 0.04em;
+        }
+        .sc-progress-track {
+          width: 100%; max-width: 640px; height: 4px;
+          background: rgba(255,255,255,0.10); border-radius: 99px; overflow: hidden;
+          margin-bottom: 28px;
+        }
+        .sc-progress-fill {
+          height: 100%; background: linear-gradient(90deg, #E8703A, #f0a060);
+          border-radius: 99px; transition: width 0.5s cubic-bezier(0.22,1,0.36,1);
+        }
+        .sc-card {
+          width: 100%; max-width: 640px;
+          background: white; border-radius: 20px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+          overflow: hidden;
+          animation: cardIn 0.45s cubic-bezier(0.22,1,0.36,1);
+        }
+        @keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(0.99); } to { opacity: 1; transform: none; } }
+
+        /* START */
+        .start-inner { padding: 48px 36px 40px; text-align: center; }
+        .start-badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 6px 16px; border-radius: 99px;
+          background: rgba(232,112,58,0.12); color: #E8703A;
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+          letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 24px;
+        }
+        .start-title {
+          font-family: 'Oswald', sans-serif; font-size: clamp(28px, 6vw, 40px);
+          font-weight: 700; color: #1A3A6C; letter-spacing: 0.02em;
+          text-transform: uppercase; line-height: 1.08; margin-bottom: 16px;
+        }
+        .start-title span { color: #E8703A; }
+        .start-sub {
+          font-family: 'DM Sans', sans-serif; font-size: 15px; color: #5a6a84;
+          line-height: 1.65; max-width: 440px; margin: 0 auto 28px;
+        }
+        .start-meta-row {
+          display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap;
+        }
+        .start-meta {
+          display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        .start-meta-num {
+          font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: #1A3A6C;
+        }
+        .start-meta-label {
+          font-family: 'DM Sans', sans-serif; font-size: 11px; color: #8a9ab5;
+          letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        .sc-phase-pills { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
+        .sc-phase-pill {
+          width: 38px; height: 38px; border-radius: 8px;
+          background: #1A3A6C; color: white;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700;
+        }
+
+        .sc-btn {
+          display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+          padding: 16px 36px; border-radius: 12px; border: none; cursor: pointer;
+          font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 700;
+          letter-spacing: 0.07em; text-transform: uppercase;
+          background: #E8703A; color: white;
+          box-shadow: 0 6px 24px rgba(232,112,58,0.30);
+          transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        }
+        .sc-btn:hover:not(:disabled) { background: #d4602e; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(232,112,58,0.40); }
+        .sc-btn:disabled { background: #d3d9e6; color: #fff; cursor: not-allowed; box-shadow: none; }
+        .sc-btn-full { width: 100%; }
+
+        /* PHASE INTRO */
+        .pi-inner { padding: 52px 36px 44px; text-align: center; }
+        .pi-letter {
+          width: 88px; height: 88px; border-radius: 18px;
+          background: linear-gradient(135deg, #1A3A6C, #2d5fa8);
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Oswald', sans-serif; font-size: 48px; font-weight: 700;
+          color: white; margin: 0 auto 22px;
+          box-shadow: 0 10px 30px rgba(26,58,108,0.25);
+          animation: letterPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes letterPop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .pi-phase-label {
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+          color: #E8703A; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 6px;
+        }
+        .pi-name {
+          font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 700;
+          color: #1A3A6C; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 4px;
+        }
+        .pi-days {
+          font-family: 'DM Sans', sans-serif; font-size: 13px; color: #8a9ab5;
+          letter-spacing: 0.06em; margin-bottom: 20px;
+        }
+        .pi-intro {
+          font-family: 'DM Sans', sans-serif; font-size: 15px; color: #5a6a84;
+          line-height: 1.65; max-width: 460px; margin: 0 auto 32px;
+        }
+
+        /* QUESTION */
+        .q-inner { padding: 36px 32px 32px; }
+        .q-phasetag {
+          display: inline-flex; align-items: center; gap: 8px;
+          margin-bottom: 20px;
+        }
+        .q-phasetag-letter {
+          width: 26px; height: 26px; border-radius: 6px; background: #1A3A6C; color: white;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 700;
+        }
+        .q-phasetag-name {
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+          color: #8a9ab5; letter-spacing: 0.10em; text-transform: uppercase;
+        }
+        .q-number {
+          font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600;
+          color: #E8703A; letter-spacing: 0.10em; margin-bottom: 10px;
+        }
+        .q-text {
+          font-family: 'DM Sans', sans-serif; font-size: 19px; font-weight: 500;
+          color: #1A3A6C; line-height: 1.45; margin-bottom: 28px;
+        }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-option {
+          display: flex; align-items: center; gap: 14px;
+          padding: 15px 18px; border-radius: 12px; cursor: pointer;
+          border: 2px solid #e8ecf4; background: white;
+          font-family: 'DM Sans', sans-serif;
+          transition: border-color 0.18s, background 0.18s, transform 0.12s;
+          text-align: left; width: 100%;
+        }
+        .q-option:hover { border-color: #E8703A; transform: translateX(2px); }
+        .q-option.selected { border-color: #E8703A; background: rgba(232,112,58,0.06); }
+        .q-option-num {
+          min-width: 30px; height: 30px; border-radius: 8px;
+          background: #f0f3f9; color: #1A3A6C;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 700;
+          transition: background 0.18s, color 0.18s; flex-shrink: 0;
+        }
+        .q-option:hover .q-option-num, .q-option.selected .q-option-num { background: #E8703A; color: white; }
+        .q-option-label {
+          font-size: 15px; color: #3a4a64; font-weight: 500;
+        }
+        .q-back {
+          margin-top: 22px; background: none; border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+          color: #8a9ab5; display: inline-flex; align-items: center; gap: 6px;
+          transition: color 0.18s;
+        }
+        .q-back:hover { color: #1A3A6C; }
+
+        /* CAPTURE */
+        .cap-inner { padding: 44px 36px 40px; text-align: center; }
+        .cap-icon {
+          width: 64px; height: 64px; border-radius: 16px;
+          background: rgba(232,112,58,0.12);
+          display: flex; align-items: center; justify-content: center;
+          margin: 0 auto 22px; font-size: 30px;
+        }
+        .cap-title {
+          font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700;
+          color: #1A3A6C; letter-spacing: 0.02em; text-transform: uppercase;
+          line-height: 1.1; margin-bottom: 12px;
+        }
+        .cap-sub {
+          font-family: 'DM Sans', sans-serif; font-size: 15px; color: #5a6a84;
+          line-height: 1.6; max-width: 400px; margin: 0 auto 28px;
+        }
+        .cap-field { margin-bottom: 14px; text-align: left; }
+        .cap-input {
+          width: 100%; padding: 14px 16px; border-radius: 10px;
+          border: 2px solid #e8ecf4; background: #fafbfd;
+          font-family: 'DM Sans', sans-serif; font-size: 15px; color: #1A3A6C;
+          transition: border-color 0.18s, background 0.18s;
+        }
+        .cap-input:focus { outline: none; border-color: #E8703A; background: white; }
+        .cap-input::placeholder { color: #aab4c6; }
+        .cap-privacy {
+          font-family: 'DM Sans', sans-serif; font-size: 12px; color: #8a9ab5;
+          margin-top: 16px; line-height: 1.5;
+        }
+
+        /* RESULTS */
+        .res-header {
+          background: #1A3A6C; padding: 26px 32px 22px; text-align: center; position: relative;
+        }
+        .res-header::after {
+          content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+          width: 60px; height: 3px; background: #E8703A; border-radius: 99px;
+        }
+        .res-wordmark {
+          font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 600;
+          letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px;
+        }
+        .res-title { font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 700; color: white; letter-spacing: 0.04em; text-transform: uppercase; }
+        .res-name { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+        .res-score-sec { padding: 32px 32px 24px; display: flex; align-items: center; gap: 26px; border-bottom: 1px solid #edf0f7; }
+        .res-gauge { flex-shrink: 0; position: relative; width: 140px; height: 140px; }
+        .res-gauge-inner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -48%); text-align: center; }
+        .res-score-num { font-family: 'Oswald', sans-serif; font-size: 46px; font-weight: 700; color: #1A3A6C; line-height: 1; }
+        .res-score-denom { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #8a9ab5; font-weight: 500; margin-top: 2px; }
+        .res-band-label {
+          display: inline-block; padding: 4px 12px; background: rgba(232,112,58,0.12); color: #E8703A;
+          border-radius: 99px; font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 600;
+          letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 10px;
+        }
+        .res-band-headline { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; color: #1A3A6C; line-height: 1.45; margin-bottom: 10px; }
+        .res-band-body { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #6b7a93; line-height: 1.6; }
+        .res-phases { padding: 24px 32px; border-bottom: 1px solid #edf0f7; }
+        .res-sec-title { font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #8a9ab5; }
+        .res-callout {
+          margin: 0 32px 28px; background: #1A3A6C; border-radius: 14px; padding: 22px 24px; position: relative; overflow: hidden;
+        }
+        .res-callout::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #E8703A; }
+        .res-callout-eyebrow { font-family: 'Oswald', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+        .res-callout-phase { font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 700; color: #E8703A; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 8px; }
+        .res-callout-cost { font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.55; font-weight: 500; }
+        .res-cta-sec { padding: 24px 32px 32px; }
+        .res-cta-sub { text-align: center; margin-top: 10px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: #8a9ab5; }
+        .res-retake {
+          display: block; margin: 18px auto 0; background: none; border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: #aab4c6;
+          text-decoration: underline; transition: color 0.18s;
+        }
+        .res-retake:hover { color: #1A3A6C; }
+
+        .sc-footer {
+          margin-top: 22px; font-family: 'Oswald', sans-serif; font-size: 10px;
+          letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); text-align: center;
+        }
+
+        @media (max-width: 520px) {
+          .res-score-sec { flex-direction: column; text-align: center; gap: 20px; }
+          .start-inner, .pi-inner, .cap-inner { padding-left: 24px; padding-right: 24px; }
+          .q-inner { padding-left: 22px; padding-right: 22px; }
+          .res-header, .res-phases, .res-cta-sec, .res-score-sec { padding-left: 22px; padding-right: 22px; }
+          .res-callout { margin-left: 22px; margin-right: 22px; }
+        }
+      `}</style>
+
+      <div className="sc-root">
+        {/* Top bar + progress (hidden on start & results) */}
+        {step.type !== "start" && step.type !== "results" && (
+          <>
+            <div className="sc-topbar">
+              <div className="sc-wordmark">The <span style={{color:"#fb7e2a"}}>SCALE</span> Method™</div>
+              <div className="sc-progress-text">
+                {step.type === "capture" ? "Almost there" : `${answeredCount} of 25`}
+              </div>
+            </div>
+            <div className="sc-progress-track">
+              <div className="sc-progress-fill" style={{ width: `${(answeredCount / 25) * 100}%` }} />
+            </div>
+          </>
+        )}
+
+        {/* ============ START ============ */}
+        {step.type === "start" && (
+          <div className="sc-card" key="start">
+            <div className="start-inner">
+              <div className="start-badge">Free Business Diagnostic</div>
+              <h1 className="start-title">The <span style={{color:"#fb7e2a"}}>SCALE</span> <span>Growth Scorecard</span></h1>
+              <p className="start-sub">
+                25 questions. Five phases. One clear score that shows you exactly where your business is strong — and where it's costing you growth.
+              </p>
+              <div className="sc-phase-pills">
+                {PHASES.map((p) => <div className="sc-phase-pill" key={p.letter}>{p.letter}</div>)}
+              </div>
+              <div className="start-meta-row">
+                <div className="start-meta"><div className="start-meta-num">25</div><div className="start-meta-label">Questions</div></div>
+                <div className="start-meta"><div className="start-meta-num">~3</div><div className="start-meta-label">Minutes</div></div>
+                <div className="start-meta"><div className="start-meta-num">100</div><div className="start-meta-label">Point Score</div></div>
+              </div>
+              <button className="sc-btn" onClick={goNext}>Start the Assessment →</button>
+            </div>
+          </div>
+        )}
+
+        {/* ============ PHASE INTRO ============ */}
+        {step.type === "phase-intro" && (
+          <div className="sc-card" key={`pi-${step.phase}`}>
+            <div className="pi-inner">
+              <div className="pi-letter">{PHASES[step.phase].letter}</div>
+              <div className="pi-phase-label">Phase {step.phase + 1} of 5</div>
+              <div className="pi-name">{PHASES[step.phase].name}</div>
+              <div className="pi-days">{PHASES[step.phase].days}</div>
+              <p className="pi-intro">{PHASES[step.phase].intro}</p>
+              <button className="sc-btn" onClick={goNext}>Begin {PHASES[step.phase].name} →</button>
+              <button className="q-back" onClick={goBack} style={{ display: "block", margin: "18px auto 0" }}>← Back</button>
+            </div>
+          </div>
+        )}
+
+        {/* ============ QUESTION ============ */}
+        {step.type === "question" && (
+          <div className="sc-card" key={`q-${step.qIndex}`}>
+            <div className="q-inner">
+              <div className="q-phasetag">
+                <div className="q-phasetag-letter">{PHASES[step.phase].letter}</div>
+                <div className="q-phasetag-name">{PHASES[step.phase].name}</div>
+              </div>
+              <div className="q-number">Question {step.localQ + 1} of 5</div>
+              <div className="q-text">{PHASES[step.phase].questions[step.localQ]}</div>
+              <div className="q-options">
+                {SCALE_OPTIONS.map((opt) => {
+                  const isSelected = pending === opt.value || (pending === null && answers[step.qIndex] === opt.value);
+                  return (
+                    <button
+                      key={opt.value}
+                      className={`q-option${isSelected ? " selected" : ""}`}
+                      onClick={() => selectAnswer(step.qIndex, opt.value)}
+                    >
+                      <div className="q-option-num">{opt.value}</div>
+                      <div className="q-option-label">{opt.label}</div>
+                    </button>
+                  );
+                })}
+              </div>
+              <button className="q-back" onClick={goBack}>← Back</button>
+            </div>
+          </div>
+        )}
+
+        {/* ============ CAPTURE ============ */}
+        {step.type === "capture" && (
+          <div className="sc-card" key="capture">
+            <div className="cap-inner">
+              <div className="cap-icon">📊</div>
+              <h2 className="cap-title">Your Scale Score is ready</h2>
+              <p className="cap-sub">
+                Enter your details to unlock your full results — your Scale Score, your phase-by-phase breakdown, and your biggest growth drag.
+              </p>
+              <div className="cap-field">
+                <input
+                  className="cap-input"
+                  type="text"
+                  placeholder="First name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+              </div>
+              <div className="cap-field">
+                <input
+                  className="cap-input"
+                  type="email"
+                  placeholder="Your best email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
+              <button
+                className="sc-btn sc-btn-full"
+                disabled={!emailValid || !form.name.trim() || submitting}
+                onClick={handleCaptureSubmit}
+              >
+                {submitting ? "Unlocking your results…" : "Show My Results →"}
+              </button>
+              <p className="cap-privacy">
+                We'll email your results and your 30-day roadmap. No spam. Unsubscribe anytime.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* ============ RESULTS ============ */}
+        {step.type === "results" && (
+          <div className="sc-card" key="results">
+            <div className="res-header">
+              <div className="res-wordmark">The SCALE Method™</div>
+              <div className="res-title">Your Growth Scorecard</div>
+              <div className="res-name">
+                {form.name ? `${form.name}'s results · ` : ""}
+                {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+              </div>
+            </div>
+
+            <div className="res-score-sec">
+              <div className="res-gauge">
+                <svg width="140" height="140" viewBox="0 0 140 140">
+                  <path d={arcPath(1)} fill="none" stroke="#edf0f7" strokeWidth="9" strokeLinecap="round" />
+                  <path d={arcPath(overallScore / 100)} fill="none"
+                    stroke={overallScore <= 40 ? "#E8703A" : overallScore <= 65 ? "#f0a060" : overallScore <= 84 ? "#2d5fa8" : "#1A3A6C"}
+                    strokeWidth="9" strokeLinecap="round" />
+                </svg>
+                <div className="res-gauge-inner">
+                  <div className="res-score-num"><AnimatedNumber value={overallScore} /></div>
+                  <div className="res-score-denom">/ 100</div>
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div className="res-band-label">{band.label}</div>
+                <div className="res-band-headline">{band.headline}</div>
+                <div className="res-band-body">{band.body}</div>
+              </div>
+            </div>
+
+            <div className="res-phases">
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                <div className="res-sec-title">Phase Breakdown</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#8a9ab5", fontWeight: 500 }}>
+                  <span style={{ color: "#E8703A", fontWeight: 700 }}>{phasesNeedingWork}</span> of 5 need work
+                  <span style={{ margin: "0 6px", color: "#d0d8e8" }}>·</span>
+                  <span style={{ color: "#1A3A6C", fontWeight: 700 }}>{5 - phasesNeedingWork}</span> on track
+                </div>
+              </div>
+              {PHASES.map((phase, i) => (
+                <PhaseBar key={i} phase={phase} score={phaseScores[i]} isWeakest={i === weakestIdx} needsWork={phaseScores[i] < 90} index={i} />
+              ))}
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginTop: "14px", paddingTop: "12px", borderTop: "1px solid #edf0f7" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: "#E8703A" }} />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#8a9ab5" }}>Needs work (below 90)</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: "#1A3A6C" }} />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#8a9ab5" }}>On track (90+)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="res-callout">
+              <div className="res-callout-eyebrow">Your biggest drag on growth</div>
+              <div className="res-callout-phase">{PHASES[weakestIdx].letter} — {PHASES[weakestIdx].name}</div>
+              <div className="res-callout-cost">{PHASES[weakestIdx].costStatement}</div>
+              <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.12)", fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.55 }}>
+                The SCALE Method works all five phases in sequence — so every gap gets closed, in the right order. This phase is where you'll feel the biggest unlock.
+              </div>
+            </div>
+
+            <div className="res-cta-sec">
+              <button className="sc-btn sc-btn-full">{band.cta} →</button>
+              <div className="res-cta-sub">{band.ctaSub}</div>
+              <button className="res-retake" onClick={() => { setAnswers(Array(25).fill(null)); setForm({ name: "", email: "" }); setStepIndex(0); }}>
+                Retake the assessment
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="sc-footer">Created by T.M. Parish · 8× Bestselling Author</div>
+      </div>
+    </>
+  );
+}
+
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<ScaleScorecard />);
+  </script>
+</body>
+</html>

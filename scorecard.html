@@ -250,7 +250,8 @@ function ScaleScorecard() {
   const overallScore = Math.round(answers.reduce((a, b) => a + (b || 0), 0) / 125 * 100);
   const weakestIdx = getWeakestPhase(phaseScores);
   const band = getBand(overallScore);
-  const phasesNeedingWork = phaseScores.filter((s) => s < 90).length;
+  phaseScores: PHASES.reduce((acc, p, i) => { acc[p.name] = phaseScores[i]; return acc; }, {}),
+phasesNeedingWork,
 
   // gauge arc
   const radius = 54, cx = 70, cy = 70, startAngle = -210, sweepAngle = 240;

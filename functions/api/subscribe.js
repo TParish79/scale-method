@@ -22,11 +22,11 @@
 // Map each phase name (sent by the front-end) to its MailerLite Group ID.
 // Replace the placeholder strings with your real IDs from step 2 above.
 const GROUP_IDS = {
-  Strategy:  "188268204952388682",
-  Customer:  "188268221097313808",
-  Action:    "188268234548446446",
-  Leverage:  "188268248022648694",
-  Endurance: "188268258337490214",
+  Strategy:  "REPLACE_WITH_STRATEGY_GROUP_ID",
+  Customer:  "REPLACE_WITH_CUSTOMER_GROUP_ID",
+  Action:    "REPLACE_WITH_ACTION_GROUP_ID",
+  Leverage:  "REPLACE_WITH_LEVERAGE_GROUP_ID",
+  Endurance: "REPLACE_WITH_ENDURANCE_GROUP_ID",
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,15 +65,11 @@ export async function onRequestPost(context) {
   const payload = {
     email,
     fields: {
-      name, // "name" is a default MailerLite field and always exists.
-
-      // OPTIONAL — richer segmentation. To store these, first create matching custom
-      // fields in MailerLite (Subscribers → Fields): a number field "scale_score" and
-      // text fields "weakest_phase" and "scale_band". Then uncomment the three lines.
-      // Leaving them commented keeps the core flow bulletproof on a fresh account.
-      scale_score:   body.overallScore,
-      weakest_phase: weakestPhase,
-      scale_band:    body.band,
+      name,
+      scale_score:          body.overallScore,
+      weakest_phase:        weakestPhase,
+      scale_band:           body.band,
+      phases_needing_work:  body.phasesNeedingWork,
     },
     groups: groupId && !groupId.startsWith("REPLACE_WITH") ? [groupId] : [],
   };

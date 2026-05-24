@@ -22,13 +22,12 @@
 // Map each phase name (sent by the front-end) to its MailerLite Group ID.
 // Replace the placeholder strings with your real IDs from step 2 above.
 const GROUP_IDS = {
-  Strategy:  "REPLACE_WITH_STRATEGY_GROUP_ID",
-  Customer:  "REPLACE_WITH_CUSTOMER_GROUP_ID",
-  Action:    "REPLACE_WITH_ACTION_GROUP_ID",
-  Leverage:  "REPLACE_WITH_LEVERAGE_GROUP_ID",
-  Endurance: "REPLACE_WITH_ENDURANCE_GROUP_ID",
+  Strategy:  "188268204952388682",
+  Customer:  "188268221097313808",
+  Action:    "188268234548446446",
+  Leverage:  "188268248022648694",
+  Endurance: "188268258337490214",
 };
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function onRequestPost(context) {

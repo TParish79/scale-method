@@ -250,8 +250,7 @@ function ScaleScorecard() {
   const overallScore = Math.round(answers.reduce((a, b) => a + (b || 0), 0) / 125 * 100);
   const weakestIdx = getWeakestPhase(phaseScores);
   const band = getBand(overallScore);
-  phaseScores: PHASES.reduce((acc, p, i) => { acc[p.name] = phaseScores[i]; return acc; }, {}),
-phasesNeedingWork,
+  const phasesNeedingWork = phaseScores.filter((s) => s < 90).length;
 
   // gauge arc
   const radius = 54, cx = 70, cy = 70, startAngle = -210, sweepAngle = 240;
@@ -283,6 +282,7 @@ phasesNeedingWork,
       weakestPhase: PHASES[weakestIdx].name,         // e.g. "Leverage" — used to pick the group
       weakestPhaseLetter: PHASES[weakestIdx].letter,  // e.g. "L"
       phaseScores: PHASES.reduce((acc, p, i) => { acc[p.name] = phaseScores[i]; return acc; }, {}),
+phasesNeedingWork,
     };
     try {
       await fetch("/api/subscribe", {

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Ask the Book™ — The SCALE Method™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  html, body, #root { height: 100%; margin: 0; padding: 0; }
+  body { font-family: 'Montserrat', sans-serif; background: #00254d; -webkit-font-smoothing: antialiased; }
+  #boot { height:100%; display:flex; align-items:center; justify-content:center; color:#fff; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+<!-- React + Babel (no-build, matches your Cloudflare Pages workflow) -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Supabase JS for subscriber auth -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div id="root"><div id="boot"><div style="width:34px;height:34px;border:3px solid rgba(255,255,255,0.2);border-top-color:#fb7e2a;border-radius:50%;animation:spin .8s linear infinite"></div></div></div>
+
+<!-- ============================ CONFIG ============================ -->
+<script>
+  // Your Supabase project's public values. These are SAFE to expose in the browser
+  // (the anon key is designed to be public; real protection is Supabase Row Level
+  // Security + the server-side gate in functions/api/chat.js).
+  window.SCALE_CONFIG = {
+    SUPABASE_URL: "https://YOUR-PROJECT-ref.supabase.co",
+    SUPABASE_ANON_KEY: "YOUR-SUPABASE-ANON-KEY",
+    // Where to send people who don't have a subscription yet:
+    SUBSCRIBE_URL: "https://scalemethod.gumroad.com/l/ask-the-book"
+  };
+</script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useRef, useEffect, useCallback } = React;
+
+// ─── Brand ────────────────────────────────────────────────────────────────────
+const BB = { orange:"#fb7e2a", navy:"#003366", navyDark:"#00254d", white:"#ffffff", ghost:"#9fb4cc", line:"rgba(255,255,255,0.12)" };
+
+// ─── Supabase client ──────────────────────────────────────────────────────────
+const sb = window.supabase.createClient(
+  window.SCALE_CONFIG.SUPABASE_URL,
+  window.SCALE_CONFIG.SUPABASE_ANON_KEY
+);
+
+
+// ─── Brand ────────────────────────────────────────────────────────────────────
+const B = {
+  orange: "#fb7e2a",
+  navy: "#003366",
+  navyDark: "#00254d",
+  navyLight: "#0a4080",
+  white: "#ffffff",
+  tint: "#fff3e9",
+  bluetint: "#eef3f9",
+  ink: "#1f2733",
+  ghost: "#8a96a3",
+  line: "#dde2e8",
+  bg: "#f0f2f5",
+  userBubble: "#fb7e2a",
+  aiBubble: "#003366",
+};
+
+// ─── Phases data ──────────────────────────────────────────────────────────────
+const PHASES = [
+  { letter: "S", name: "Strategy",  days: "Days 1–7"  },
+  { letter: "C", name: "Customer",  days: "Days 8–14" },
+  { letter: "A", name: "Action",    days: "Days 15–21"},
+  { letter: "L", name: "Leverage",  days: "Days 22–25"},
+  { letter: "E", name: "Endurance", days: "Days 26–30"},
+];
+
+const STARTERS = [
+  "I'm just getting started with Phase S — where do I begin?",
+  "How do I figure out who my ideal customer actually is?",
+  "I'm stuck on building a sales process. Help me structure it.",
+  "How do I stop being the bottleneck in my own business?",
+  "What should my referral system look like?",
+  "I keep getting new customers but losing them fast. What's wrong?",
+  "What metrics should I be tracking right now?",
+  "How do I build brand authority without spending a lot?",
+];
+
+// ─── Markdown-lite renderer ───────────────────────────────────────────────────
+function RenderMessage({ text, isUser }) {
+  const color = isUser ? B.white : B.white;
+  const dimColor = isUser ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.8)";
+
+  const paragraphs = text.split(/\n\n+/);
+
+  const renderInline = (str) =>
+    str.split(/(\*\*[^*]+\*\*)/g).map((seg, i) =>
+      seg.startsWith("**") && seg.endsWith("**") ? (
+        <strong key={i} style={{ color: isUser ? B.white : B.orange, fontWeight: 700 }}>
+          {seg.slice(2, -2)}
+        </strong>
+      ) : seg
+    );
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {paragraphs.map((para, pi) => {
+        if (!para.trim()) return null;
+        const lines = para.split("\n").filter((l) => l.trim());
+        const isList =
+          lines.length > 1 &&
+          lines.every((l) => /^[-•→\d]/.test(l.trim()));
+
+        if (isList) {
+          return (
+            <ul key={pi} style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
+              {lines.map((line, li) => {
+                const clean = line.replace(/^[-•→\d+\.]\s*/, "").trim();
+                return (
+                  <li key={li} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: isUser ? "rgba(255,255,255,0.7)" : B.orange, marginTop: 8, flexShrink: 0 }} />
+                    <span style={{ fontSize: 14, lineHeight: 1.65, color: dimColor, fontFamily: "'Montserrat', sans-serif" }}>
+                      {renderInline(clean)}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        }
+
+        return (
+          <p key={pi} style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: dimColor, fontFamily: "'Montserrat', sans-serif" }}>
+            {renderInline(para)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Typing indicator ─────────────────────────────────────────────────────────
+function TypingDots() {
+  return (
+    <div style={{ display: "flex", gap: 5, alignItems: "center", padding: "4px 0" }}>
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          style={{
+            width: 7, height: 7, borderRadius: "50%",
+            background: B.orange,
+            animation: `typingBounce 1.2s ${i * 0.2}s infinite ease-in-out`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+function SCALEMethodChat({ session, onLogout }) {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [industry, setIndustry] = useState("");
+  const [activePhase, setActivePhase] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const [showStarters, setShowStarters] = useState(true);
+  const [inputRows, setInputRows] = useState(1);
+
+  const bottomRef = useRef(null);
+  const inputRef = useRef(null);
+  const recognitionRef = useRef(null);
+
+  // Check voice support
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      setVoiceSupported(true);
+      const rec = new SpeechRecognition();
+      rec.continuous = false;
+      rec.interimResults = true;
+      rec.lang = "en-US";
+      rec.onresult = (e) => {
+        const transcript = Array.from(e.results).map((r) => r[0].transcript).join("");
+        setInput(transcript);
+      };
+      rec.onend = () => setIsListening(false);
+      rec.onerror = () => setIsListening(false);
+      recognitionRef.current = rec;
+    }
+  }, []);
+
+  // Auto-scroll
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    const lines = (input.match(/\n/g) || []).length + 1;
+    setInputRows(Math.min(Math.max(lines, 1), 5));
+  }, [input]);
+
+  const toggleVoice = () => {
+    if (!recognitionRef.current) return;
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      setInput("");
+      recognitionRef.current.start();
+      setIsListening(true);
+    }
+  };
+
+  const sendMessage = useCallback(async (text) => {
+    const trimmed = (text || input).trim();
+    if (!trimmed || isLoading) return;
+
+    setShowStarters(false);
+    setInput("");
+    setInputRows(1);
+
+    const userMsg = { role: "user", content: trimmed, ts: Date.now() };
+    setMessages((prev) => [...prev, userMsg]);
+    setIsLoading(true);
+
+    // Build context prefix
+    const contextLines = [];
+    if (industry) contextLines.push(`My business is in: ${industry}`);
+    if (activePhase) {
+      const p = PHASES.find((ph) => ph.letter === activePhase);
+      contextLines.push(`I am currently working on Phase ${p.letter} — ${p.name} (${p.days})`);
+    }
+    const contextPrefix = contextLines.length
+      ? `[Context: ${contextLines.join(". ")}]\n\n`
+      : "";
+
+    // Build history for API
+    const apiMessages = messages
+      .filter((m) => m.role === "user" || m.role === "assistant")
+      .map((m) => ({ role: m.role, content: m.content }));
+    apiMessages.push({ role: "user", content: contextPrefix + trimmed });
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + (session?.access_token || ""),
+        },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+      const data = await res.json();
+      const reply = data.reply || data.error || "I didn't get a response. Please try again.";
+      setMessages((prev) => [...prev, { role: "assistant", content: reply, ts: Date.now() }]);
+    } catch {
+      setMessages((prev) => [...prev, { role: "assistant", content: "There was a connection issue. Please try again.", ts: Date.now() }]);
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [input, isLoading, messages, industry, activePhase, session]);
+
+  const handleKey = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const resetChat = () => {
+    setMessages([]);
+    setShowStarters(true);
+    setInput("");
+  };
+
+  return (
+    <div style={{ display: "flex", height: "100vh", background: B.bg, fontFamily: "'Montserrat', sans-serif", overflow: "hidden", position: "relative" }}>
+      <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+      <style>{`
+        @keyframes typingBounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+          40% { transform: translateY(-6px); opacity: 1; }
+        }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes ripple {
+          0% { box-shadow: 0 0 0 0 rgba(251,126,42,0.5); }
+          100% { box-shadow: 0 0 0 14px rgba(251,126,42,0); }
+        }
+        .msg-appear { animation: fadeUp 0.3s ease forwards; }
+        .starter-btn:hover { background: ${B.tint} !important; border-color: ${B.orange} !important; color: ${B.navy} !important; }
+        textarea:focus { outline: none; }
+        textarea::placeholder { color: ${B.ghost}; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: ${B.line}; border-radius: 10px; }
+      `}</style>
+
+      {/* ── SIDEBAR ── */}
+      <div style={{
+        width: sidebarOpen ? 260 : 0,
+        minWidth: sidebarOpen ? 260 : 0,
+        background: B.navyDark,
+        display: "flex",
+        flexDirection: "column",
+        transition: "all 0.28s cubic-bezier(0.4,0,0.2,1)",
+        overflow: "hidden",
+        flexShrink: 0,
+        borderRight: sidebarOpen ? `1px solid rgba(255,255,255,0.07)` : "none",
+      }}>
+        {sidebarOpen && (
+          <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "20px 16px" }}>
+            {/* Sidebar header */}
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                {"SCALE".split("").map((l, i) => (
+                  <div key={i} style={{
+                    width: 26, height: 26, borderRadius: 4,
+                    background: i === 0 ? B.orange : "rgba(255,255,255,0.08)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontFamily: "'League Gothic', sans-serif",
+                    fontSize: 15, color: i === 0 ? B.navy : B.white,
+                    fontWeight: 400,
+                  }}>{l}</div>
+                ))}
+              </div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Method Advisor</div>
+            </div>
+
+            {/* Industry */}
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: B.orange, letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>
+                Your Industry
+              </label>
+              <input
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                placeholder="e.g. Home Services, SaaS..."
+                style={{
+                  width: "100%", padding: "9px 12px",
+                  background: "rgba(255,255,255,0.06)",
+                  border: `1px solid ${industry ? B.orange : "rgba(255,255,255,0.12)"}`,
+                  borderRadius: 6, color: B.white,
+                  fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+                  boxSizing: "border-box",
+                }}
+              />
+              {industry && (
+                <div style={{ fontSize: 11, color: B.orange, marginTop: 5, display: "flex", alignItems: "center", gap: 4 }}>
+                  <span>✓</span> Answers tailored to {industry}
+                </div>
+              )}
+            </div>
+
+            {/* Active phase */}
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: B.orange, letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>
+                Current Phase
+              </label>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {PHASES.map((p) => (
+                  <button key={p.letter}
+                    onClick={() => setActivePhase(activePhase === p.letter ? null : p.letter)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 10,
+                      padding: "8px 12px", borderRadius: 6, border: "none",
+                      background: activePhase === p.letter ? "rgba(251,126,42,0.18)" : "rgba(255,255,255,0.04)",
+                      cursor: "pointer", width: "100%", textAlign: "left",
+                      borderLeft: `3px solid ${activePhase === p.letter ? B.orange : "transparent"}`,
+                      transition: "all 0.15s",
+                    }}>
+                    <span style={{
+                      width: 24, height: 24, borderRadius: 3,
+                      background: activePhase === p.letter ? B.orange : "rgba(255,255,255,0.1)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontFamily: "'League Gothic', sans-serif", fontSize: 14,
+                      color: activePhase === p.letter ? B.navy : "rgba(255,255,255,0.5)",
+                      fontWeight: 400, flexShrink: 0,
+                    }}>{p.letter}</span>
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: activePhase === p.letter ? B.white : "rgba(255,255,255,0.65)" }}>{p.name}</div>
+                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{p.days}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Spacer */}
+            <div style={{ flex: 1 }} />
+
+            {/* New Chat */}
+            <button onClick={resetChat} style={{
+              padding: "10px 14px", background: "rgba(255,255,255,0.06)",
+              border: `1px solid rgba(255,255,255,0.1)`, borderRadius: 7,
+              color: "rgba(255,255,255,0.55)", fontSize: 12, cursor: "pointer",
+              fontFamily: "'Montserrat', sans-serif", fontWeight: 600,
+              letterSpacing: "0.06em", textTransform: "uppercase",
+              display: "flex", alignItems: "center", gap: 8,
+              width: "100%", justifyContent: "center",
+              transition: "all 0.15s",
+            }}>
+              <span style={{ fontSize: 14 }}>＋</span> New Conversation
+            </button>
+
+            <div style={{ marginTop: 16, fontSize: 10, color: "rgba(255,255,255,0.2)", textAlign: "center", lineHeight: 1.6 }}>
+              The SCALE Method™<br />by T.M. Parish · Subscriber Only
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ── MAIN CHAT AREA ── */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
+
+        {/* Top bar */}
+        <div style={{
+          background: B.navy, padding: "0 20px",
+          height: 58, display: "flex", alignItems: "center",
+          gap: 14, flexShrink: 0,
+          borderBottom: `3px solid ${B.orange}`,
+          position: "relative", zIndex: 10,
+        }}>
+          {/* Sidebar toggle */}
+          <button onClick={() => setSidebarOpen((s) => !s)} style={{
+            width: 34, height: 34, borderRadius: 7,
+            background: sidebarOpen ? "rgba(251,126,42,0.2)" : "rgba(255,255,255,0.07)",
+            border: `1px solid ${sidebarOpen ? B.orange : "rgba(255,255,255,0.1)"}`,
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            gap: 4, cursor: "pointer", padding: 0, flexShrink: 0,
+          }}>
+            {[0, 1, 2].map((i) => (
+              <div key={i} style={{ width: 14, height: 1.5, background: sidebarOpen ? B.orange : "rgba(255,255,255,0.6)", borderRadius: 2, transition: "all 0.2s" }} />
+            ))}
+          </button>
+
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ display: "flex", gap: 2 }}>
+              {"SCALE".split("").map((l, i) => (
+                <div key={i} style={{
+                  width: 22, height: 22, borderRadius: 3,
+                  background: i === 0 ? B.orange : "rgba(255,255,255,0.08)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "'League Gothic', sans-serif",
+                  fontSize: 13, color: i === 0 ? B.navy : B.white,
+                }}>{l}</div>
+              ))}
+            </div>
+            <div>
+              <div style={{ fontFamily: "'League Gothic', sans-serif", fontSize: 16, color: B.white, letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1 }}>
+                Ask The SCALE Method
+              </div>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: "0.06em" }}>
+                {activePhase ? `Phase ${activePhase} · ` : ""}{industry || "Your AI Book Advisor"}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ flex: 1 }} />
+
+          {/* Status dot */}
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", letterSpacing: "0.06em" }}>Live</span>
+          </div>
+
+          {/* Logout */}
+          <button onClick={onLogout} title="Sign out" style={{
+            marginLeft: 6, padding: "6px 12px", borderRadius: 7,
+            background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+            color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 600,
+            letterSpacing: "0.06em", textTransform: "uppercase", cursor: "pointer",
+            fontFamily: "'Montserrat', sans-serif", flexShrink: 0,
+          }}>Sign Out</button>
+        </div>
+
+        {/* Messages area */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "24px 20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+
+          {/* Welcome state */}
+          {messages.length === 0 && (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center", padding: "20px 0 40px" }}>
+              {/* Hero badge */}
+              <div style={{
+                width: 64, height: 64, borderRadius: 16,
+                background: B.navy, display: "flex", alignItems: "center", justifyContent: "center",
+                marginBottom: 16, boxShadow: `0 8px 32px rgba(0,51,102,0.25)`,
+                border: `2px solid ${B.orange}`,
+              }}>
+                <span style={{ fontFamily: "'League Gothic', sans-serif", fontSize: 36, color: B.orange, lineHeight: 1 }}>S</span>
+              </div>
+
+              <h2 style={{
+                fontFamily: "'League Gothic', sans-serif",
+                fontSize: 28, fontWeight: 400, color: B.navy,
+                letterSpacing: "0.06em", textTransform: "uppercase",
+                margin: "0 0 8px",
+              }}>Ask The SCALE Method</h2>
+
+              <p style={{ fontSize: 14, color: B.ghost, lineHeight: 1.65, maxWidth: 400, margin: "0 0 28px" }}>
+                Ask any question about your phase, your business challenge, or any day in the 30-day framework. Type it or speak it — I'll answer from the book.
+              </p>
+
+              {/* Context reminder */}
+              {(!industry && !activePhase) && (
+                <div style={{
+                  background: B.tint, border: `1px solid rgba(251,126,42,0.3)`,
+                  borderRadius: 8, padding: "10px 16px", marginBottom: 20,
+                  fontSize: 12, color: B.navy, display: "flex", alignItems: "center", gap: 8,
+                  maxWidth: 380,
+                }}>
+                  <span style={{ color: B.orange, fontSize: 14 }}>☰</span>
+                  Open the menu to set your phase &amp; industry for personalized answers
+                </div>
+              )}
+
+              {/* Starter questions */}
+              {showStarters && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%", maxWidth: 480 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: B.ghost, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>
+                    Try asking…
+                  </div>
+                  {STARTERS.map((s, i) => (
+                    <button key={i} className="starter-btn"
+                      onClick={() => sendMessage(s)}
+                      style={{
+                        padding: "11px 16px", borderRadius: 8,
+                        border: `1.5px solid ${B.line}`,
+                        background: B.white, cursor: "pointer", textAlign: "left",
+                        fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+                        color: B.ink, lineHeight: 1.45,
+                        transition: "all 0.15s",
+                        boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+                      }}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Chat messages */}
+          {messages.map((msg, i) => {
+            const isUser = msg.role === "user";
+            return (
+              <div key={i} className="msg-appear" style={{
+                display: "flex",
+                flexDirection: isUser ? "row-reverse" : "row",
+                gap: 10, alignItems: "flex-end",
+              }}>
+                {/* Avatar */}
+                {!isUser && (
+                  <div style={{
+                    width: 32, height: 32, borderRadius: 8, flexShrink: 0,
+                    background: B.navy, border: `2px solid ${B.orange}`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontFamily: "'League Gothic', sans-serif", fontSize: 18,
+                    color: B.orange, marginBottom: 2,
+                  }}>S</div>
+                )}
+
+                {/* Bubble */}
+                <div style={{
+                  maxWidth: "72%", padding: "14px 18px", borderRadius: isUser ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                  background: isUser ? B.orange : B.navy,
+                  boxShadow: isUser ? `0 4px 16px rgba(251,126,42,0.25)` : `0 4px 16px rgba(0,51,102,0.2)`,
+                  position: "relative",
+                }}>
+                  <RenderMessage text={msg.content} isUser={isUser} />
+                </div>
+
+                {/* User avatar */}
+                {isUser && (
+                  <div style={{
+                    width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                    background: "rgba(251,126,42,0.15)",
+                    border: `2px solid ${B.orange}`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 14, marginBottom: 2,
+                  }}>👤</div>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Loading indicator */}
+          {isLoading && (
+            <div className="msg-appear" style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+              <div style={{
+                width: 32, height: 32, borderRadius: 8,
+                background: B.navy, border: `2px solid ${B.orange}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontFamily: "'League Gothic', sans-serif", fontSize: 18, color: B.orange,
+              }}>S</div>
+              <div style={{
+                padding: "14px 18px", borderRadius: "16px 16px 16px 4px",
+                background: B.navy, boxShadow: `0 4px 16px rgba(0,51,102,0.2)`,
+              }}>
+                <TypingDots />
+              </div>
+            </div>
+          )}
+
+          <div ref={bottomRef} />
+        </div>
+
+        {/* ── INPUT BAR ── */}
+        <div style={{
+          padding: "12px 20px 16px",
+          background: B.white,
+          borderTop: `1px solid ${B.line}`,
+          flexShrink: 0,
+        }}>
+          <div style={{
+            display: "flex", alignItems: "flex-end", gap: 10,
+            background: B.bg, borderRadius: 14,
+            border: `2px solid ${input ? B.orange : B.line}`,
+            padding: "10px 12px 10px 16px",
+            transition: "border-color 0.2s",
+            boxShadow: input ? `0 0 0 3px rgba(251,126,42,0.1)` : "none",
+          }}>
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKey}
+              rows={inputRows}
+              placeholder={isListening ? "🎤 Listening... speak your question" : "Ask anything about the SCALE Method..."}
+              style={{
+                flex: 1, background: "transparent", border: "none",
+                fontFamily: "'Montserrat', sans-serif", fontSize: 14,
+                color: B.ink, resize: "none", lineHeight: 1.55,
+                paddingTop: 2,
+              }}
+            />
+
+            <div style={{ display: "flex", gap: 6, alignItems: "center", paddingBottom: 2 }}>
+              {/* Voice button */}
+              {voiceSupported && (
+                <button onClick={toggleVoice} style={{
+                  width: 38, height: 38, borderRadius: 10, border: "none",
+                  background: isListening ? B.orange : "rgba(0,51,102,0.08)",
+                  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 16, flexShrink: 0, transition: "all 0.2s",
+                  animation: isListening ? "ripple 1s infinite" : "none",
+                  boxShadow: isListening ? `0 0 0 0 rgba(251,126,42,0.5)` : "none",
+                }}>
+                  🎤
+                </button>
+              )}
+
+              {/* Send button */}
+              <button onClick={() => sendMessage()} disabled={!input.trim() || isLoading} style={{
+                width: 38, height: 38, borderRadius: 10, border: "none",
+                background: input.trim() && !isLoading ? B.orange : B.line,
+                cursor: input.trim() && !isLoading ? "pointer" : "not-allowed",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0, transition: "all 0.2s",
+                boxShadow: input.trim() && !isLoading ? `0 4px 12px rgba(251,126,42,0.4)` : "none",
+              }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M14 8L2 2l3 6-3 6 12-6z" fill={input.trim() && !isLoading ? B.white : B.ghost} />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+            <span style={{ fontSize: 10, color: B.ghost, letterSpacing: "0.05em" }}>
+              Enter to send · Shift+Enter for new line{voiceSupported ? " · 🎤 tap mic to speak" : ""}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// ─── Login Screen ─────────────────────────────────────────────────────────────
+function LoginScreen() {
+  const [mode, setMode] = useState("password"); // "password" | "magic"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const [err, setErr] = useState(null);
+
+  const submit = async () => {
+    setErr(null); setMsg(null);
+    if (!email.trim()) { setErr("Enter your email address."); return; }
+    setBusy(true);
+    try {
+      if (mode === "password") {
+        const { error } = await sb.auth.signInWithPassword({ email: email.trim(), password });
+        if (error) setErr(error.message || "Login failed. Check your details.");
+      } else {
+        const { error } = await sb.auth.signInWithOtp({
+          email: email.trim(),
+          options: { shouldCreateUser: false, emailRedirectTo: window.location.href },
+        });
+        if (error) setErr(error.message || "Could not send link.");
+        else setMsg("Check your inbox — we just sent you a one-tap login link.");
+      }
+    } catch (e) {
+      setErr("Something went wrong. Please try again.");
+    } finally { setBusy(false); }
+  };
+
+  const onKey = (e) => { if (e.key === "Enter") submit(); };
+
+  return (
+    <div style={{ minHeight:"100%", display:"flex", alignItems:"center", justifyContent:"center",
+      background:`radial-gradient(1200px 600px at 50% -10%, #0a4080 0%, ${BB.navyDark} 55%)`, padding:24 }}>
+      <div style={{ width:"100%", maxWidth:400 }}>
+        {/* Logo */}
+        <div style={{ display:"flex", justifyContent:"center", gap:6, marginBottom:18 }}>
+          {"SCALE".split("").map((l,i)=>(
+            <div key={i} style={{ width:34, height:34, borderRadius:6,
+              background: i===0?BB.orange:"rgba(255,255,255,0.08)",
+              display:"flex", alignItems:"center", justifyContent:"center",
+              fontFamily:"'League Gothic', sans-serif", fontSize:20,
+              color: i===0?BB.navy:BB.white }}>{l}</div>
+          ))}
+        </div>
+        <h1 style={{ fontFamily:"'League Gothic', sans-serif", fontSize:32, color:BB.white,
+          textAlign:"center", letterSpacing:"0.05em", textTransform:"uppercase", margin:"0 0 4px" }}>
+          Ask the Book™
+        </h1>
+        <p style={{ textAlign:"center", color:BB.ghost, fontSize:13, margin:"0 0 28px", letterSpacing:"0.03em" }}>
+          Your private SCALE Method advisor. Subscribers only.
+        </p>
+
+        <div style={{ background:"rgba(255,255,255,0.04)", border:`1px solid ${BB.line}`,
+          borderRadius:14, padding:24, backdropFilter:"blur(6px)" }}>
+
+          <label style={{ fontSize:10, fontWeight:700, color:BB.orange, letterSpacing:"0.15em", textTransform:"uppercase", display:"block", marginBottom:7 }}>Email</label>
+          <input value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={onKey}
+            type="email" autoComplete="email" placeholder="you@business.com"
+            style={inp} />
+
+          {mode==="password" && (
+            <>
+              <label style={{ fontSize:10, fontWeight:700, color:BB.orange, letterSpacing:"0.15em", textTransform:"uppercase", display:"block", margin:"16px 0 7px" }}>Password</label>
+              <input value={password} onChange={e=>setPassword(e.target.value)} onKeyDown={onKey}
+                type="password" autoComplete="current-password" placeholder="••••••••"
+                style={inp} />
+            </>
+          )}
+
+          {err && <div style={{ color:"#ff9b8a", fontSize:12.5, marginTop:14, lineHeight:1.5 }}>{err}</div>}
+          {msg && <div style={{ color:"#7fe3a0", fontSize:12.5, marginTop:14, lineHeight:1.5 }}>{msg}</div>}
+
+          <button onClick={submit} disabled={busy} style={{
+            width:"100%", marginTop:18, padding:"13px 0", borderRadius:9, border:"none",
+            background: busy? "rgba(251,126,42,0.5)" : BB.orange, color:BB.navy,
+            fontFamily:"'Montserrat', sans-serif", fontSize:14, fontWeight:700,
+            letterSpacing:"0.06em", textTransform:"uppercase", cursor: busy?"default":"pointer",
+            boxShadow:"0 6px 18px rgba(251,126,42,0.35)" }}>
+            {busy ? "Working…" : (mode==="password" ? "Sign In" : "Email Me a Login Link")}
+          </button>
+
+          <button onClick={()=>{setMode(mode==="password"?"magic":"password");setErr(null);setMsg(null);}}
+            style={{ width:"100%", marginTop:12, background:"none", border:"none",
+            color:BB.ghost, fontSize:12, cursor:"pointer", fontFamily:"'Montserrat', sans-serif" }}>
+            {mode==="password" ? "Forgot password? Email me a login link instead" : "← Back to password sign-in"}
+          </button>
+        </div>
+
+        <p style={{ textAlign:"center", color:"rgba(255,255,255,0.4)", fontSize:12, marginTop:22, lineHeight:1.6 }}>
+          Don't have access yet?{" "}
+          <a href={window.SCALE_CONFIG.SUBSCRIBE_URL} style={{ color:BB.orange, textDecoration:"none", fontWeight:600 }}>
+            Subscribe to Ask the Book™ →
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
+const inp = {
+  width:"100%", padding:"12px 14px", background:"rgba(255,255,255,0.06)",
+  border:`1px solid ${BB.line}`, borderRadius:9, color:BB.white,
+  fontFamily:"'Montserrat', sans-serif", fontSize:14, outline:"none",
+};
+
+
+// ─── App Root: gate between login and the advisor ─────────────────────────────
+function App() {
+  const [session, setSession] = useState(undefined); // undefined = still loading
+
+  useEffect(() => {
+    sb.auth.getSession().then(({ data }) => setSession(data.session || null));
+    const { data: sub } = sb.auth.onAuthStateChange((_e, s) => setSession(s || null));
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  const logout = async () => { await sb.auth.signOut(); setSession(null); };
+
+  if (session === undefined) {
+    return (
+      <div style={{ height:"100%", display:"flex", alignItems:"center", justifyContent:"center", background:BB.navyDark }}>
+        <div style={{ width:34, height:34, border:"3px solid rgba(255,255,255,0.2)", borderTopColor:BB.orange, borderRadius:"50%", animation:"spin .8s linear infinite" }} />
+      </div>
+    );
+  }
+  if (!session) return <LoginScreen />;
+  return <SCALEMethodChat session={session} onLogout={logout} />;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

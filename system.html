@@ -44,7 +44,24 @@
   .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-link { font-family: var(--body); font-size: 12px; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: rgba(255,255,255,0.70); text-decoration: none; transition: color .2s; }
   .nav-link:hover { color: var(--orange); }
-  @media (max-width: 600px) { .nav-links { display: none; } }
+  @media (max-width: 600px) {
+  .nav {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 12px 5%;
+    gap: 10px;
+  }
+  .nav-links {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    order: 3;
+  }
+  .nav-cta {
+    order: 2;
+  }
+}
+
   .nav-cta {
     background: var(--orange); color: var(--navy);
     font-family: var(--body); font-weight: 700; font-size: 12px;

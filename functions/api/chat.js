@@ -182,7 +182,7 @@ export async function onRequestPost(context) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-5",
         max_tokens: 1024,
         system: SYSTEM_PROMPT,
         messages,
@@ -191,7 +191,7 @@ export async function onRequestPost(context) {
 
     if (!aiRes.ok) {
       const detail = await aiRes.text();
-      return json({ error: "The advisor is temporarily unavailable.", detail }, 502);
+      return json({ error: "The advisor is temporarily unavailable.", detail }, 500);
     }
 
     const data = await aiRes.json();
@@ -200,6 +200,6 @@ export async function onRequestPost(context) {
       "I didn't get a response. Please try again.";
     return json({ reply });
   } catch (e) {
-    return json({ error: "There was a connection issue. Please try again." }, 502);
+    return json({ error: "There was a connection issue. Please try again." }, 500);
   }
 }

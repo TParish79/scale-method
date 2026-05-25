@@ -185,7 +185,11 @@ function LandingPage() {
           transition: background 0.2s, transform 0.15s;
         }
         .nav-cta:hover { background: #d56b24; transform: translateY(-1px); }
-        @media (max-width: 600px) { .nav-links { display: none; } }
+        @media (max-width: 600px) {
+  .nav { height: auto; flex-wrap: wrap; padding: 12px 5%; gap: 10px; }
+  .nav-links { display: flex; width: 100%; gap: 16px; order: 3; }
+  .nav-cta { order: 2; }
+}
 
         /* HERO */
         .hero {

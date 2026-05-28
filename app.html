@@ -795,9 +795,44 @@ const inp = {
 };
 
 
+// ─── Access Expired Screen ────────────────────────────────────────────────────
+function AccessExpiredScreen() {
+  return (
+    <div style={{ minHeight:"100%", display:"flex", alignItems:"center", justifyContent:"center",
+      background:`radial-gradient(1200px 600px at 50% -10%, #0a4080 0%, ${BB.navyDark} 55%)`, padding:24 }}>
+      <div style={{ width:"100%", maxWidth:400, textAlign:"center" }}>
+        <div style={{ display:"flex", justifyContent:"center", gap:6, marginBottom:18 }}>
+          {"SCALE".split("").map((l,i)=>(
+            <div key={i} style={{ width:34, height:34, borderRadius:6,
+              background: i===0?BB.orange:"rgba(255,255,255,0.08)",
+              display:"flex", alignItems:"center", justifyContent:"center",
+              fontFamily:"'League Gothic', sans-serif", fontSize:20,
+              color: i===0?BB.navy:BB.white }}>{l}</div>
+          ))}
+        </div>
+        <h1 style={{ fontFamily:"'League Gothic', sans-serif", fontSize:32, color:BB.white,
+          textAlign:"center", letterSpacing:"0.05em", textTransform:"uppercase", margin:"0 0 12px" }}>
+          Access Expired
+        </h1>
+        <p style={{ textAlign:"center", color:BB.ghost, fontSize:14, margin:"0 0 28px", lineHeight:1.6 }}>
+          Your 90-day complimentary access has ended.<br/>Subscribe to continue working with your AI advisor.
+        </p>
+        <a href={window.SCALE_CONFIG.SUBSCRIBE_URL}
+          style={{ display:"inline-block", padding:"13px 28px", borderRadius:9,
+          background:BB.orange, color:BB.navy, fontFamily:"'Montserrat', sans-serif",
+          fontSize:14, fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase",
+          textDecoration:"none", boxShadow:"0 6px 18px rgba(251,126,42,0.35)" }}>
+          Subscribe to Ask the Book™ →
+        </a>
+      </div>
+    </div>
+  );
+}
+
 // ─── App Root: gate between login and the advisor ─────────────────────────────
 function App() {
   const [session, setSession] = useState(undefined); // undefined = still loading
+  const [accessStatus, setAccessStatus] = useState("checking"); // "checking" | "allowed" | "expired"
 
   useEffect(() => {
     sb.auth.getSession().then(({ data }) => setSession(data.session || null));
@@ -805,9 +840,30 @@ function App() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  const logout = async () => { await sb.auth.signOut(); setSession(null); };
+  // Check access_until in profiles table whenever session changes
+  useEffect(() => {
+    if (!session) { setAccessStatus("checking"); return; }
+    sb.from("profiles")
+      .select("access_until")
+      .eq("id", session.user.id)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        // On DB error, fail open — don't block a valid subscriber
+        if (error) { setAccessStatus("allowed"); return; }
+        // No profile row OR access_until is null = à la carte, unlimited access
+        if (!data || data.access_until === null) { setAccessStatus("allowed"); return; }
+        // Profile row with a date = bundle buyer, check if expired
+        const expiry = new Date(data.access_until);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        setAccessStatus(today > expiry ? "expired" : "allowed");
+      });
+  }, [session]);
 
-  if (session === undefined) {
+  const logout = async () => { await sb.auth.signOut(); setSession(null); setAccessStatus("checking"); };
+
+  // Still loading session or checking access
+  if (session === undefined || (session && accessStatus === "checking")) {
     return (
       <div style={{ height:"100%", display:"flex", alignItems:"center", justifyContent:"center", background:BB.navyDark }}>
         <div style={{ width:34, height:34, border:"3px solid rgba(255,255,255,0.2)", borderTopColor:BB.orange, borderRadius:"50%", animation:"spin .8s linear infinite" }} />
@@ -815,6 +871,7 @@ function App() {
     );
   }
   if (!session) return <LoginScreen />;
+  if (accessStatus === "expired") return <AccessExpiredScreen />;
   return <SCALEMethodChat session={session} onLogout={logout} />;
 }
 

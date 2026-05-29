@@ -530,7 +530,7 @@ function LandingPage() {
           </div>
 
           <div className="hero-cta-wrap" style={{ opacity: 0, animation: "fadeUp 0.8s ease 0.55s forwards" }}>
-            <button className="hero-btn">
+            <button className="hero-btn" onClick={() => window.location.href='/scorecard'}>
               Get My Free Growth Score
               <span className="hero-btn-arrow">→</span>
             </button>
@@ -684,7 +684,7 @@ function LandingPage() {
               Take the free SCALE Method™ Growth Scorecard. Know exactly where you stand — and exactly what to do about it.
             </p>
             <div className="final-cta-wrap">
-              <button className="hero-btn" style={{ margin: "0 auto" }}>
+              <button className="hero-btn" style={{ margin: "0 auto" }} onClick={() => window.location.href='/scorecard'}>
                 Get My Free Growth Score →
               </button>
               <div className="final-meta">Free · 3 minutes · No fluff. Just your score.</div>

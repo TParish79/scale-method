@@ -171,6 +171,12 @@ function SCALEMethodChat({ session, onLogout }) {
   const [showStarters, setShowStarters] = useState(true);
   const [inputRows, setInputRows] = useState(1);
 
+  // ── Chat history state ──
+  const [sessionId, setSessionId] = useState(() => crypto.randomUUID());
+  const [conversationList, setConversationList] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [activeConversationId, setActiveConversationId] = useState(null);
+
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -199,6 +205,91 @@ function SCALEMethodChat({ session, onLogout }) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
+  // ── Load the list of past conversations for the sidebar ──
+  const loadConversationList = useCallback(async () => {
+    if (!session?.user?.id) return;
+    setHistoryLoading(true);
+    try {
+      // Pull recent messages, newest first. We group into conversations client-side.
+      const { data, error } = await sb
+        .from("conversations")
+        .select("session_id, role, content, created_at")
+        .eq("user_id", session.user.id)
+        .order("created_at", { ascending: false })
+        .limit(400);
+
+      if (error || !data) { setHistoryLoading(false); return; }
+
+      // Group by session_id, keep order newest-first, capture first user message as the title
+      const groups = {};
+      for (const row of data) {
+        if (!groups[row.session_id]) {
+          groups[row.session_id] = { sessionId: row.session_id, lastAt: row.created_at, title: null };
+        }
+        // Because rows are newest-first, the LAST user row we see is the earliest = the title
+        if (row.role === "user") groups[row.session_id].title = row.content;
+      }
+      const list = Object.values(groups)
+        .sort((a, b) => new Date(b.lastAt) - new Date(a.lastAt))
+        .map((g) => ({
+          sessionId: g.sessionId,
+          lastAt: g.lastAt,
+          title: (g.title || "New conversation").slice(0, 60),
+        }));
+      setConversationList(list);
+    } catch {
+      /* fail quietly — history is non-critical */
+    } finally {
+      setHistoryLoading(false);
+    }
+  }, [session]);
+
+  // Fetch the conversation list once on mount
+  useEffect(() => {
+    loadConversationList();
+  }, [loadConversationList]);
+
+  // ── Load a single past conversation into the chat window ──
+  const loadConversation = useCallback(async (sid) => {
+    if (!session?.user?.id) return;
+    setIsLoading(true);
+    try {
+      const { data, error } = await sb
+        .from("conversations")
+        .select("role, content, created_at")
+        .eq("user_id", session.user.id)
+        .eq("session_id", sid)
+        .order("created_at", { ascending: true });
+
+      if (!error && data) {
+        setMessages(data.map((r) => ({ role: r.role, content: r.content, ts: new Date(r.created_at).getTime() })));
+        setSessionId(sid);
+        setActiveConversationId(sid);
+        setShowStarters(false);
+      }
+    } catch {
+      /* ignore */
+    } finally {
+      setIsLoading(false);
+    }
+  }, [session]);
+
+  // ── Persist a single message row to Supabase ──
+  const saveMessage = useCallback(async (role, content, sid) => {
+    if (!session?.user?.id) return;
+    try {
+      await sb.from("conversations").insert({
+        user_id: session.user.id,
+        session_id: sid,
+        role,
+        content,
+      });
+    } catch {
+      /* fail quietly — a failed save shouldn't break the chat */
+    }
+  }, [session]);
+
+
   // Auto-resize textarea
   useEffect(() => {
     const lines = (input.match(/\n/g) || []).length + 1;
@@ -225,9 +316,13 @@ function SCALEMethodChat({ session, onLogout }) {
     setInput("");
     setInputRows(1);
 
+    const isFirstMessage = messages.length === 0;
     const userMsg = { role: "user", content: trimmed, ts: Date.now() };
     setMessages((prev) => [...prev, userMsg]);
     setIsLoading(true);
+
+    // Persist the user message
+    saveMessage("user", trimmed, sessionId);
 
     // Build context prefix
     const contextLines = [];
@@ -258,13 +353,20 @@ function SCALEMethodChat({ session, onLogout }) {
       const data = await res.json();
       const reply = data.reply || data.error || "I didn't get a response. Please try again.";
       setMessages((prev) => [...prev, { role: "assistant", content: reply, ts: Date.now() }]);
+      // Persist the assistant reply
+      saveMessage("assistant", reply, sessionId);
+      // If this was the first message, the conversation is now real — refresh the sidebar
+      if (isFirstMessage) {
+        setActiveConversationId(sessionId);
+        setTimeout(() => loadConversationList(), 600);
+      }
     } catch {
       setMessages((prev) => [...prev, { role: "assistant", content: "There was a connection issue. Please try again.", ts: Date.now() }]);
     } finally {
       setIsLoading(false);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [input, isLoading, messages, industry, activePhase, session]);
+  }, [input, isLoading, messages, industry, activePhase, session, sessionId, saveMessage, loadConversationList]);
 
   const handleKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -277,6 +379,8 @@ function SCALEMethodChat({ session, onLogout }) {
     setMessages([]);
     setShowStarters(true);
     setInput("");
+    setSessionId(crypto.randomUUID());
+    setActiveConversationId(null);
   };
 
   return (
@@ -395,8 +499,47 @@ function SCALEMethodChat({ session, onLogout }) {
               </div>
             </div>
 
+            {/* Conversation history */}
+            <div style={{ marginBottom: 12, display: "flex", flexDirection: "column", minHeight: 0, flex: 1 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: B.orange, letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: 8, flexShrink: 0 }}>
+                Recent Conversations
+              </label>
+              <div style={{ overflowY: "auto", display: "flex", flexDirection: "column", gap: 4, flex: 1, minHeight: 0 }}>
+                {historyLoading && conversationList.length === 0 && (
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", padding: "6px 2px" }}>Loading…</div>
+                )}
+                {!historyLoading && conversationList.length === 0 && (
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", padding: "6px 2px", lineHeight: 1.5 }}>
+                    Your past conversations will appear here.
+                  </div>
+                )}
+                {conversationList.map((c) => {
+                  const isActive = c.sessionId === activeConversationId;
+                  return (
+                    <button key={c.sessionId}
+                      onClick={() => loadConversation(c.sessionId)}
+                      title={c.title}
+                      style={{
+                        textAlign: "left", padding: "8px 10px", borderRadius: 6, border: "none",
+                        background: isActive ? "rgba(251,126,42,0.18)" : "rgba(255,255,255,0.04)",
+                        borderLeft: `3px solid ${isActive ? B.orange : "transparent"}`,
+                        cursor: "pointer", width: "100%",
+                        fontFamily: "'Montserrat', sans-serif",
+                        transition: "all 0.15s",
+                      }}>
+                      <div style={{
+                        fontSize: 12, color: isActive ? B.white : "rgba(255,255,255,0.7)",
+                        whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                        fontWeight: isActive ? 600 : 500,
+                      }}>{c.title}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Spacer */}
-            <div style={{ flex: 1 }} />
+            <div style={{ flexShrink: 0 }} />
 
             {/* New Chat */}
             <button onClick={resetChat} style={{

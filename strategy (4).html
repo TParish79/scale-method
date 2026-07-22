@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The SCALE Method™ — Get Phase S (Strategy) Free</title>
+  <meta name="description" content="Get Phase S of the SCALE Method free: a guided 7-day strategy foundation that ends with your Strategy Blueprint." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #003366; --navy-deep: #0f2347; --navy-mid: #1A3A6C;
+      --orange: #fb7e2a; --orange-lt: #ff9f5c;
+      --ink: #23324a; --muted: #5a6a84; --line: #e8ecf4;
+      --paper: #ffffff; --wash: #f6f8fc;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--paper); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .wrap { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 22px; }
+
+    /* NAV (matches index) */
+    .nav {
+      background: #003366; border-bottom: 3px solid #fb7e2a;
+      padding: 0 5%; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'League Gothic', 'Arial Narrow', sans-serif;
+      font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff;
+    }
+    .nav-logo span { color: #fb7e2a; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-link {
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      color: rgba(255,255,255,0.70); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: #fb7e2a; }
+    .nav-cta {
+      background: #fb7e2a; color: #003366;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      padding: 9px 20px; border-radius: 4px; border: none;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #d56b24; transform: translateY(-1px); }
+    @media (max-width: 600px) {
+      .nav { height: auto; flex-wrap: wrap; padding: 12px 5%; gap: 10px; }
+      .nav-links { display: flex; width: 100%; gap: 16px; order: 3; }
+      .nav-cta { order: 2; }
+    }
+
+    /* hero */
+    .hero { background: linear-gradient(165deg, var(--navy-deep) 0%, var(--navy-mid) 100%); color: #fff; padding: 58px 0 66px; position: relative; overflow: hidden; }
+    .hero::after { content: ""; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(251,126,42,0.18), transparent 68%); pointer-events: none; }
+    .badge-row { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+    .s-badge { width: 58px; height: 58px; border-radius: 13px; background: linear-gradient(135deg, var(--orange), var(--orange-lt)); display: flex; align-items: center; justify-content: center; font-family: 'Oswald', sans-serif; font-size: 34px; font-weight: 700; color: var(--navy-deep); flex-shrink: 0; box-shadow: 0 8px 24px rgba(251,126,42,0.32); }
+    .badge-meta .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--orange-lt); }
+    .badge-meta .phase-name { font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; margin-top: 2px; }
+    .hero h1 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(32px, 6vw, 48px); line-height: 1.08; letter-spacing: -0.01em; color: #fff; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--orange); }
+    .hero .lede { font-size: clamp(16px, 2.3vw, 18px); color: rgba(255,255,255,0.82); max-width: 570px; margin-bottom: 12px; }
+    .hero .lede strong { color: #fff; font-weight: 600; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14); padding: 8px 14px; border-radius: 99px; }
+    .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+
+    section { padding: 56px 0; }
+    .section-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--orange); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .section-tag::before { content: ""; width: 26px; height: 2px; background: var(--orange); border-radius: 2px; }
+    h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px); line-height: 1.15; color: var(--navy); letter-spacing: -0.005em; margin-bottom: 12px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 580px; }
+    .section-sub strong { color: var(--ink); font-weight: 600; }
+
+    /* premise callout */
+    .premise { background: var(--wash); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .premise-quote { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: clamp(20px, 3.4vw, 26px); line-height: 1.28; color: var(--navy); border-left: 4px solid var(--orange); padding-left: 20px; margin-top: 6px; }
+
+    /* 7-day sequence */
+    .seq-open { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--orange); border-radius: 12px; padding: 18px 20px; margin-top: 26px; }
+    .seq-open .oicon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; background: var(--wash); display: flex; align-items: center; justify-content: center; }
+    .seq-open .oicon svg { width: 18px; height: 18px; color: var(--orange); }
+    .seq-open .t { font-weight: 600; color: var(--ink); }
+    .seq-open .s { color: var(--muted); font-size: 14.5px; }
+    .days { list-style: none; margin-top: 14px; display: grid; gap: 10px; }
+    .days li { display: flex; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 15px 18px; }
+    .day-num { flex-shrink: 0; width: 46px; height: 46px; border-radius: 10px; background: var(--navy); color: #fff; font-family: 'Oswald', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+    .day-num small { font-size: 8.5px; letter-spacing: 0.12em; opacity: 0.7; }
+    .day-num b { font-size: 20px; font-weight: 700; }
+    .day-title { font-weight: 600; color: var(--ink); font-size: 15.5px; }
+    .day-time { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted); background: var(--wash); border: 1px solid var(--line); padding: 5px 10px; border-radius: 99px; flex-shrink: 0; }
+    .capstone-note { display: flex; gap: 14px; align-items: center; margin-top: 12px; background: var(--navy); color: #fff; border-radius: 12px; padding: 18px 20px; }
+    .capstone-note .cn-badge { flex-shrink: 0; font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy-deep); background: linear-gradient(135deg, var(--orange), var(--orange-lt)); padding: 7px 12px; border-radius: 8px; }
+    .capstone-note .cn-txt { font-size: 15px; }
+    .capstone-note .cn-txt strong { font-weight: 700; }
+
+    /* blueprint outcomes */
+    .blueprint { background: var(--wash); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .bp-list { list-style: none; margin-top: 26px; display: grid; gap: 12px; }
+    .bp-list li { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+    .check { flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+    .check svg { width: 13px; height: 13px; }
+    .bp-list .d-title { font-weight: 600; color: var(--ink); }
+    .bp-list .d-note { color: var(--muted); font-size: 14.5px; }
+
+    /* hero download button */
+    .hero-dl { display: inline-block; margin-top: 28px; padding: 15px 32px; font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; color: var(--navy-deep); background: linear-gradient(135deg, var(--orange), var(--orange-lt)); border-radius: 10px; box-shadow: 0 12px 30px rgba(251,126,42,0.34); transition: transform 0.12s, box-shadow 0.12s; }
+    .hero-dl:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(251,126,42,0.44); }
+    .hero-note { margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.6); }
+
+    /* download */
+    .download { background: var(--navy); color: #fff; text-align: center; }
+    .download h2 { color: #fff; }
+    .download .section-sub { color: rgba(255,255,255,0.72); }
+    .dl-card { max-width: 460px; margin: 30px auto 0; }
+    .cta { display: block; width: 100%; padding: 18px; font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; text-align: center; text-decoration: none; color: #fff; background: linear-gradient(135deg, var(--orange), var(--orange-lt)); border: none; border-radius: 12px; cursor: pointer; transition: transform 0.12s, box-shadow 0.12s; box-shadow: 0 12px 30px rgba(251,126,42,0.36); }
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(251,126,42,0.44); }
+    .fineprint { font-size: 13px; color: rgba(255,255,255,0.62); text-align: center; margin-top: 16px; line-height: 1.5; }
+
+    /* book */
+    .book .book-panel { display: flex; gap: 26px; align-items: center; background: var(--wash); border: 1px solid var(--line); border-radius: 18px; padding: 26px; margin-top: 8px; }
+    .book-cover { flex-shrink: 0; width: 118px; border-radius: 8px; box-shadow: 0 12px 30px rgba(0,51,102,0.22); display: block; }
+    .book-body h2 { font-size: clamp(21px, 3.4vw, 26px); margin-bottom: 10px; }
+    .book-body p { color: var(--muted); font-size: 15.5px; margin-bottom: 10px; }
+    .book-body p strong { color: var(--ink); font-weight: 600; }
+    .ku-tag { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--navy); background: #fff; border: 1px solid var(--line); padding: 7px 13px; border-radius: 99px; margin-top: 4px; }
+    .ku-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+
+    .footer { background: var(--navy-deep); border-top: 3px solid var(--orange); padding: 28px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 18px; color: #fff; letter-spacing: .06em; text-transform: uppercase; }
+    .footer-logo span { color: var(--orange); }
+    .footer-copy { font-size: 12px; color: #6b8cae; }
+    .footer-link { font-size: 12px; color: var(--orange); text-decoration: none; }
+    .footer-link:hover { text-decoration: underline; }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+    @media (max-width: 560px) {
+      .book .book-panel { flex-direction: column; text-align: center; }
+      .book-cover { width: 130px; }
+      .ku-tag { margin-left: auto; margin-right: auto; }
+      .day-time { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">The <span>SCALE</span> Method™</div>
+    <div class="nav-links">
+      <a href="/30dayscalebook.html" class="nav-link">The Book</a>
+      <a href="/system.html" class="nav-link">The System</a>
+    </div>
+    <a href="/scorecard.html" class="nav-cta">Free Score</a>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="badge-row reveal in">
+        <div class="s-badge">S</div>
+        <div class="badge-meta">
+          <div class="eyebrow">Free · Phase S · Days 1&ndash;7</div>
+          <div class="phase-name">Strategy</div>
+        </div>
+      </div>
+      <h1 class="reveal in">Before marketing. Before sales. Before hiring.<br>Start with <em>Strategy</em>.</h1>
+      <p class="lede reveal in">Phase S is Week 1 of the SCALE Method: a guided 7-day sequence that sets the foundation before you touch anything else.</p>
+      <p class="lede reveal in">You'll score where you stand today, then sharpen your goals, define your market, and set your position one day at a time. <strong>It ends with your Strategy Blueprint</strong> &mdash; the working document you run the next 30 days against.</p>
+      <div class="hero-meta reveal in">
+        <span class="chip"><span class="dot"></span> 7 guided days</span>
+        <span class="chip"><span class="dot"></span> ~30 min a day</span>
+        <span class="chip"><span class="dot"></span> Ends with your Strategy Blueprint</span>
+      </div>
+      <a class="hero-dl reveal in" href="/downloads/phase-s.pdf" download>Download Phase S free &rarr;</a>
+      <p class="hero-note reveal in">No email required. Yours to keep and to share.</p>
+    </div>
+  </header>
+
+  <!-- premise -->
+  <section class="premise">
+    <div class="wrap">
+      <div class="section-tag reveal">Why Phase S comes first</div>
+      <h2 class="reveal">Foundation, not guesswork.</h2>
+      <p class="section-sub reveal">Most owners work on marketing before they know who they're selling to, and chase revenue before they know what a customer is worth. Phase S fixes the order.</p>
+      <p class="premise-quote reveal">"Sharpen your goals, define your market with precision, and set your position. Without this, everything else is guesswork."</p>
+    </div>
+  </section>
+
+  <!-- 7-day sequence -->
+  <section>
+    <div class="wrap">
+      <div class="section-tag reveal">Inside Phase S</div>
+      <h2 class="reveal">Seven days. One per morning.</h2>
+      <p class="section-sub reveal">Each day is a short, focused worksheet that builds on the one before it. No ambiguity about what to do next.</p>
+
+      <div class="seq-open reveal">
+        <span class="oicon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2v6l3 2M10 18a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div>
+          <div class="t">First, your baseline.</div>
+          <div class="s">Score your Strategy phase 1&ndash;5 across five honest statements (out of 25) before you begin. You retake the same check on Day 30 and see exactly how far you moved.</div>
+        </div>
+      </div>
+
+      <ul class="days">
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>1</b></span><span class="day-title">Clarifying Your Growth Goals</span><span class="day-time">~30 min</span></li>
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>2</b></span><span class="day-title">Auditing Your Current Operations</span><span class="day-time">~30 min</span></li>
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>3</b></span><span class="day-title">Knowing Your Target Market</span><span class="day-time">~30 min</span></li>
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>4</b></span><span class="day-title">Understanding Your Competition</span><span class="day-time">~30 min</span></li>
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>5</b></span><span class="day-title">Creating a 30-Day Growth Roadmap</span><span class="day-time">~30 min</span></li>
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>6</b></span><span class="day-title">Setting Up Scalable Processes</span><span class="day-time">~30 min</span></li>
+        <li class="reveal"><span class="day-num"><small>DAY</small><b>7</b></span><span class="day-title">Aligning Your Team for Growth</span><span class="day-time">~30 min</span></li>
+      </ul>
+
+      <div class="capstone-note reveal">
+        <span class="cn-badge">Day 7</span>
+        <span class="cn-txt">Everything converges into <strong>The Strategy Blueprint</strong> &mdash; one page you sign, date, and run the next 30 days against.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- outcomes -->
+  <section class="blueprint">
+    <div class="wrap">
+      <div class="section-tag reveal">What you'll have by the end of Week 1</div>
+      <h2 class="reveal">Seven days. Seven things you can point to.</h2>
+      <p class="section-sub reveal">It all rolls up into your <strong>Strategy Blueprint</strong> &mdash; the one page you sign, date, and run the next 30 days against.</p>
+      <ul class="bp-list">
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">A specific, measurable 30-day revenue goal.</span> <span class="d-note">Not a wish. A target.</span></span>
+        </li>
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">An honest audit of where your operations break down.</span> <span class="d-note">The constraints capping your growth today.</span></span>
+        </li>
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">A crystal-clear ideal customer profile.</span> <span class="d-note">No more "everyone."</span></span>
+        </li>
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">Your competitive positioning.</span> <span class="d-note">Why someone chooses you over the alternative.</span></span>
+        </li>
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">A day-by-day growth plan.</span> <span class="d-note">So you know exactly what to do next.</span></span>
+        </li>
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">Scalable processes that can handle growth.</span> <span class="d-note">Instead of breaking under it.</span></span>
+        </li>
+        <li class="reveal">
+          <span class="check"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="d-title">Your team aligned and clear on the plan.</span> <span class="d-note">Or your own accountability structure, if you're solo.</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- download -->
+  <section class="download" id="get">
+    <div class="wrap">
+      <div class="section-tag reveal" style="color: var(--orange-lt);">Yours to keep</div>
+      <h2 class="reveal">Download Phase S free.</h2>
+      <p class="section-sub reveal">No email, no sign-up, no catch. The full Week 1 of the SCALE Method, ready to work through today.</p>
+
+      <div class="dl-card reveal">
+        <a class="cta" href="/downloads/phase-s.pdf" download>Download Phase S (PDF)</a>
+        <p class="fineprint">Free to use and free to share. If Week 1 moves the needle, the rest of the system is waiting for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- book -->
+  <section class="book">
+    <div class="wrap">
+      <div class="section-tag reveal">Want to go deeper?</div>
+      <div class="book-panel reveal">
+        <img class="book-cover" src="https://the30dayscale.com/assets/book-cover.jpg" alt="Scale Your Business in 30 Days book cover" onerror="this.style.display='none'" />
+        <div class="book-body">
+          <h2>Phase S comes straight from the book.</h2>
+          <p>Phase S works on its own. But every day here is drawn from my book, <strong>Scale Your Business in 30 Days</strong>, where you get the full context, examples, and the reasoning behind each step of the sequence.</p>
+          <p>Reading it isn't required to work through Phase S. But it will make a difference in how far you get.</p>
+          <span class="ku-tag"><span class="dot"></span> Read it free on Kindle Unlimited</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">The <span>SCALE</span> Method™</div>
+    <div class="footer-copy">© T.M. Parish. All rights reserved.</div>
+    <a href="https://www.the30dayscale.com" class="footer-link">the30dayscale.com</a>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal:not(.in)');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); } });
+      }, { threshold: 0.14 });
+      els.forEach(function (e) { obs.observe(e); });
+    })();
+  </script>
+</body>
+</html>

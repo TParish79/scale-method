@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frequently Asked Questions — The SCALE Method&trade;</title>
+<meta name="description" content="Everything you need to decide whether The SCALE Method is right for your business. What it is, what it isn't, who it helps, what it costs, and how it works." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="ba0beb6a-b0f9-4fd7-9eaa-82cb96978879"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #f4f6fb; font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  .nav {
+    background: #003366; border-bottom: 3px solid #fb7e2a;
+    padding: 0 5%; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .nav-logo {
+    font-family: 'League Gothic', 'Arial Narrow', sans-serif;
+    font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff;
+    text-decoration: none;
+  }
+  .nav-logo span { color: #fb7e2a; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-link {
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    color: rgba(255,255,255,0.70); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-link:hover, .nav-link:focus-visible { color: #fb7e2a; }
+  .nav-link.is-current { color: #fb7e2a; }
+  .nav-cta {
+    background: #fb7e2a; color: #003366;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    padding: 9px 20px; border-radius: 4px; border: none;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: #d56b24; transform: translateY(-1px); }
+  @media (max-width: 600px) {
+    .nav { height: auto; flex-wrap: wrap; padding: 12px 5%; gap: 10px; }
+    .nav-links { display: flex; width: 100%; gap: 16px; order: 3; }
+    .nav-cta { order: 2; }
+  }
+
+  /* HERO */
+  .faq-hero {
+    background: linear-gradient(160deg, #00264d 0%, #003366 60%, #0a4a87 100%);
+    padding: 72px 24px 64px; position: relative; overflow: hidden; text-align: center;
+  }
+  .faq-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 70% 40%, rgba(232,112,58,0.12) 0%, transparent 65%),
+                radial-gradient(ellipse at 20% 80%, rgba(232,112,58,0.07) 0%, transparent 55%);
+  }
+  .faq-hero-grid {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
+    background-image: linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .faq-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 99px;
+    border: 1px solid rgba(232,112,58,0.4); background: rgba(232,112,58,0.10);
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: #fb7e2a; }
+  .faq-hero h1 {
+    font-family: 'Oswald', sans-serif; font-size: clamp(32px, 6vw, 56px);
+    font-weight: 700; color: #fff; letter-spacing: 0.01em;
+    text-transform: uppercase; line-height: 1.06; margin-bottom: 18px;
+  }
+  .faq-hero h1 span { color: #fb7e2a; }
+  .faq-hero p {
+    font-size: clamp(15px, 2.2vw, 18px); color: rgba(255,255,255,0.68);
+    line-height: 1.65; max-width: 580px; margin: 0 auto;
+  }
+
+  /* SEARCH */
+  .faq-search-wrap { max-width: 520px; margin: 32px auto 0; position: relative; }
+  .faq-search {
+    width: 100%; padding: 15px 18px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08);
+    color: #fff; font-family: 'DM Sans', sans-serif; font-size: 15px;
+  }
+  .faq-search::placeholder { color: rgba(255,255,255,0.42); }
+  .faq-search:focus { outline: 2px solid #fb7e2a; outline-offset: 1px; background: rgba(255,255,255,0.13); }
+
+  /* JUMP NAV */
+  .jump {
+    background: #fff; border-bottom: 1px solid #e8ecf4;
+    position: sticky; top: 64px; z-index: 90;
+  }
+  @media (max-width: 600px) { .jump { position: static; } }
+  .jump-inner {
+    max-width: 1000px; margin: 0 auto; padding: 14px 24px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .jump-link {
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none;
+    color: #5a6a84; background: #f4f6fb; border: 1px solid #e8ecf4;
+    padding: 7px 12px; border-radius: 99px; transition: all 0.18s;
+  }
+  .jump-link:hover, .jump-link:focus-visible { background: #003366; color: #fff; border-color: #003366; }
+
+  /* SECTIONS */
+  .faq-body { max-width: 860px; margin: 0 auto; padding: 56px 24px 40px; }
+  .faq-section { margin-bottom: 52px; scroll-margin-top: 130px; }
+  .section-eyebrow {
+    font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase; color: #fb7e2a; margin-bottom: 10px;
+  }
+  .section-headline {
+    font-family: 'Oswald', sans-serif; font-size: clamp(22px, 3.4vw, 32px);
+    font-weight: 700; color: #003366; letter-spacing: 0.02em;
+    text-transform: uppercase; line-height: 1.12;
+  }
+  .divider { width: 48px; height: 3px; background: #fb7e2a; border-radius: 99px; margin: 16px 0 24px; }
+
+  /* ACCORDION */
+  .qa { background: #fff; border: 1px solid #e8ecf4; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+  .qa[open] { border-color: #d3dcea; box-shadow: 0 4px 20px rgba(0,51,102,0.06); }
+  .qa summary {
+    list-style: none; cursor: pointer; padding: 18px 52px 18px 22px;
+    font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 600;
+    color: #003366; line-height: 1.45; position: relative; transition: background 0.15s;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary:hover { background: #fafbfe; }
+  .qa summary:focus-visible { outline: 2px solid #fb7e2a; outline-offset: -2px; }
+  .qa summary::after {
+    content: '+'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 400;
+    color: #fb7e2a; line-height: 1; transition: transform 0.2s;
+  }
+  .qa[open] summary::after { content: '\2013'; }
+  .qa-answer { padding: 0 22px 22px; border-top: 1px solid #f0f3f9; margin-top: -1px; padding-top: 18px; }
+  .qa-answer p { font-size: 14.5px; color: #5a6a84; line-height: 1.72; margin-bottom: 12px; }
+  .qa-answer p:last-child { margin-bottom: 0; }
+  .qa-answer ul { margin: 0 0 12px 18px; }
+  .qa-answer li { font-size: 14.5px; color: #5a6a84; line-height: 1.7; margin-bottom: 7px; }
+  .qa-answer strong { color: #003366; font-weight: 600; }
+  .qa-answer a { color: #fb7e2a; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(251,126,42,0.35); }
+  .qa-answer a:hover { border-bottom-color: #fb7e2a; }
+  .qa.is-hidden { display: none; }
+
+  .no-results {
+    display: none; text-align: center; padding: 48px 24px;
+    font-size: 15px; color: #5a6a84;
+  }
+  .no-results.is-visible { display: block; }
+
+  /* CALLOUT */
+  .callout {
+    background: #003366; border-left: 4px solid #fb7e2a; border-radius: 12px;
+    padding: 28px 26px; margin: 0 0 52px;
+  }
+  .callout-label {
+    font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #fb7e2a; margin-bottom: 10px;
+  }
+  .callout p { font-size: 15px; color: rgba(255,255,255,0.78); line-height: 1.7; margin-bottom: 10px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: #fff; font-weight: 600; }
+
+  /* FINAL CTA */
+  .final-cta {
+    background: linear-gradient(160deg, #00264d 0%, #003366 100%);
+    padding: 88px 24px; text-align: center; position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(232,112,58,0.15) 0%, transparent 60%);
+  }
+  .final-cta-headline {
+    font-family: 'Oswald', sans-serif; font-size: clamp(26px, 4.6vw, 44px);
+    font-weight: 700; color: #fff; letter-spacing: 0.02em; text-transform: uppercase;
+    line-height: 1.1; max-width: 700px; margin: 0 auto 16px; position: relative; z-index: 1;
+  }
+  .final-cta-headline span { color: #fb7e2a; }
+  .final-cta-sub {
+    font-size: 16px; color: rgba(255,255,255,0.60); max-width: 480px;
+    margin: 0 auto 36px; line-height: 1.65; position: relative; z-index: 1;
+  }
+  .final-cta-wrap { position: relative; z-index: 1; }
+  .hero-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 18px 40px; border-radius: 12px; border: none; cursor: pointer;
+    font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: #fb7e2a; color: #fff; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(232,112,58,0.35);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .hero-btn:hover { background: #d56b24; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232,112,58,0.45); }
+  .final-meta { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.30); letter-spacing: 0.06em; }
+
+  /* FOOTER */
+  .footer {
+    background: #002244; border-top: 3px solid #fb7e2a;
+    padding: 28px 5%; display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-logo {
+    font-family: 'League Gothic', 'Arial Narrow', sans-serif;
+    font-size: 17px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff;
+  }
+  .footer-logo span { color: #fb7e2a; }
+  .footer-copy { font-family: 'Montserrat', sans-serif; font-size: 12px; color: #4a6a96; }
+  .footer-link { font-family: 'Montserrat', sans-serif; font-size: 12px; color: #fb7e2a; text-decoration: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">The <span>SCALE</span> Method&trade;</a>
+  <div class="nav-links">
+    <a href="/30dayscalebook.html" class="nav-link">The Book</a>
+    <a href="/system.html" class="nav-link">The System</a>
+    <a href="/faq.html" class="nav-link is-current">FAQ</a>
+  </div>
+  <a href="/scorecard.html" class="nav-cta">Free Score</a>
+</nav>
+
+<!-- HERO -->
+<section class="faq-hero">
+  <div class="faq-hero-grid"></div>
+  <div class="faq-hero-inner">
+    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> Answers Before You Buy</div>
+    <h1>Everything you need <span>to decide.</span></h1>
+    <p>What The SCALE Method is. What it isn't. Who it works for, who it doesn't, and exactly what happens after you order. Read it all before you spend a dollar.</p>
+    <div class="faq-search-wrap">
+      <input type="search" class="faq-search" id="faqSearch" placeholder="Search the questions&hellip;" aria-label="Search frequently asked questions" />
+    </div>
+  </div>
+</section>
+
+<!-- JUMP NAV -->
+<div class="jump">
+  <div class="jump-inner">
+    <a class="jump-link" href="#what-it-is">What It Is</a>
+    <a class="jump-link" href="#what-its-not">What It Isn't</a>
+    <a class="jump-link" href="#who-it-helps">Who It Helps</a>
+    <a class="jump-link" href="#who-does-work">Who Does The Work</a>
+    <a class="jump-link" href="#fit">Is It Right For Me</a>
+    <a class="jump-link" href="#scorecard">The Scorecard</a>
+    <a class="jump-link" href="#time">Time</a>
+    <a class="jump-link" href="#pricing">What You Get</a>
+    <a class="jump-link" href="#delivery">Delivery</a>
+    <a class="jump-link" href="#advisor">AI Advisor</a>
+    <a class="jump-link" href="#results">Results</a>
+    <a class="jump-link" href="#policies">Policies</a>
+    <a class="jump-link" href="#advisory">Private Advisory</a>
+    <a class="jump-link" href="#author">The Author</a>
+    <a class="jump-link" href="#future">What's Coming</a>
+    <a class="jump-link" href="#practical">Account Help</a>
+  </div>
+</div>
+
+<div class="faq-body">
+
+<div class="no-results" id="noResults">No questions match that search. Try a different word, or clear the search to see everything.</div>
+
+<!-- 1. WHAT IT IS -->
+<section class="faq-section" id="what-it-is">
+  <div class="section-eyebrow">Section 01</div>
+  <h2 class="section-headline">What The SCALE Method Is</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What is The SCALE Method?</summary><div class="qa-answer">
+    <p>The SCALE Method is a 30-day business operating system. It gives you a defined sequence of daily decisions and actions that move your business from inconsistent growth to a repeatable process you can run again and again.</p>
+    <p>It is a product, not a program. You buy the book and the workbook, you work through the 30 days, and you come out the other side with systems in place that keep running after the 30 days are over.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does SCALE stand for?</summary><div class="qa-answer">
+    <p>Five sequential phases: <strong>S</strong>trategy, <strong>C</strong>ustomer, <strong>A</strong>ction, <strong>L</strong>everage, <strong>E</strong>ndurance.</p>
+  </div></details>
+
+  <details class="qa"><summary>What are the five phases and what happens in each?</summary><div class="qa-answer">
+    <ul>
+      <li><strong>Strategy (Days 1&ndash;7)</strong> &mdash; Goals, market definition, competitive positioning, and your 30-day roadmap.</li>
+      <li><strong>Customer (Days 8&ndash;14)</strong> &mdash; Retention, loyalty, personalization, and expanding revenue from customers you already have.</li>
+      <li><strong>Action (Days 15&ndash;21)</strong> &mdash; Marketing, sales, partnerships, and building a revenue engine that runs consistently.</li>
+      <li><strong>Leverage (Days 22&ndash;25)</strong> &mdash; Operations, automation, team systems, and removing yourself as the choke point.</li>
+      <li><strong>Endurance (Days 26&ndash;30)</strong> &mdash; Brand authority, feedback loops, and the systems that keep momentum going.</li>
+    </ul>
+  </div></details>
+
+  <details class="qa"><summary>Why 30 days? Why not longer?</summary><div class="qa-answer">
+    <p>Thirty days is long enough to install real systems and short enough that you finish. Most business frameworks fail on the second count. Owners start a twelve-week program, hit week four, and quit.</p>
+    <p>Thirty days also matches how a business owner actually works. You are running the company while you do this. A defined end point keeps it moving.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this a book, a course, a program, or something else?</summary><div class="qa-answer">
+    <p>It is a system delivered as physical products. The book is the instruction manual. The workbook is the implementation tool. Together they are the system.</p>
+    <p>There is no course to log into and no cohort to keep pace with. You own the materials and you work at your desk.</p>
+  </div></details>
+
+  <details class="qa"><summary>How is this different from other business growth books?</summary><div class="qa-answer">
+    <p>A book tells you what to think about. This tells you what to do today, and gives you the page to do it on.</p>
+    <p>The workbook is the difference. Every day has a specific exercise with a specific output. At the end of 30 days you have a completed record of decisions made and systems built, not a stack of highlighted pages.</p>
+  </div></details>
+
+  <details class="qa"><summary>Where did this framework come from?</summary><div class="qa-answer">
+    <p>From client work. T.M. Parish spent years implementing this process inside small businesses as a consultant and fractional leader, working directly with owners. The same sequence kept producing results across different companies and industries.</p>
+    <p>She wrote <em>Scale Your Business in 30 Days</em> to document that process. The book found an audience, and the audience made the next step obvious: turn it into a complete system owners could implement themselves, without hiring anyone.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is The SCALE Method proven, or is it a new idea?</summary><div class="qa-answer">
+    <p>The framework is proven. It was built and refined over years of consulting and fractional leadership work, implemented directly inside real businesses before any of it was written down. The book has been in market since with an established readership.</p>
+    <p>The self-guided product is the newer part. Being direct about it: the process has a track record, and the packaged version of it is early. If you want a library of published case studies on the productized system before you buy anything, that does not exist yet.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why is it built around a repeatable cycle instead of a one-time fix?</summary><div class="qa-answer">
+    <p>Because a business does not stop changing. A fix applied once decays. A cycle you can run again gives you a way to re-diagnose and re-tune as the business grows.</p>
+    <p>That is why the Compound Workbook exists. It runs three more full SCALE cycles across days 31&ndash;90 so the process becomes something the business does, not something you did once.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does "operating system for your business" actually mean?</summary><div class="qa-answer">
+    <p>It means a defined way of making the recurring decisions in your company: how you set direction, how you keep customers, how you generate revenue, how you get work off your desk, and how you keep it all running.</p>
+    <p>Most owners make those decisions ad hoc, on instinct, in whatever order the week hands them. An operating system puts them in a sequence and gives each one a place to live.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I have to follow the phases in order?</summary><div class="qa-answer">
+    <p>Yes. Each phase assumes the one before it is finished. Customer work without Strategy work gives you retention tactics with no direction behind them. Leverage before Action means you are automating a revenue engine that does not exist yet.</p>
+    <p>Your scorecard will tell you which phase is weakest. That is useful context, not permission to skip ahead.</p>
+  </div></details>
+
+  <details class="qa"><summary>What happens after the 30 days are over?</summary><div class="qa-answer">
+    <p>You have working systems and a completed record of what you decided and why. You retake the scorecard to measure the change.</p>
+    <p>From there you either run the cycle again on your own or move into the Compound Workbook, which structures days 31&ndash;90 as three additional cycles.</p>
+  </div></details>
+
+  <details class="qa"><summary>What is a SCALE Cycle?</summary><div class="qa-answer">
+    <p>One complete pass through all five phases. The first cycle takes 30 days. Later cycles run faster because the systems already exist and you are tuning rather than building.</p>
+  </div></details>
+</section>
+
+<!-- 2. WHAT IT'S NOT -->
+<section class="faq-section" id="what-its-not">
+  <div class="section-eyebrow">Section 02</div>
+  <h2 class="section-headline">What It Is Not</h2>
+  <div class="divider"></div>
+
+  <div class="callout">
+    <div class="callout-label">Read this section first</div>
+    <p>The single most common reason someone is unhappy with a purchase is that they expected a person on the other end. There isn't one.</p>
+    <p><strong>The SCALE Method is a product you implement yourself.</strong> No calls, no coach, no done-for-you work. If that is a problem, this page will save you $67 and save us both the trouble.</p>
+  </div>
+
+  <details class="qa"><summary>Is this coaching?</summary><div class="qa-answer">
+    <p>No. Coaching is a person meeting with you regularly to work on your specific situation. This is a system you buy and run yourself.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this consulting?</summary><div class="qa-answer">
+    <p>No. A consultant studies your business and hands you recommendations. Here, you do the diagnosis and you make the decisions. The system tells you what to look at and in what order.</p>
+    <p>The process came out of consulting work, which is exactly why it can be handed over. Years of running it inside client businesses turned it into a defined sequence, and a defined sequence is something you can run yourself.</p>
+  </div></details>
+
+  <details class="qa"><summary>Will someone do the work for me?</summary><div class="qa-answer">
+    <p>No. This only works if the owner or the person running operations does the work. There is no version of this where you hand it off and receive results.</p>
+  </div></details>
+
+  <details class="qa"><summary>Will I get calls, check-ins, or a coach assigned to me?</summary><div class="qa-answer">
+    <p>No. There are no scheduled calls and no assigned contact. You receive automated emails during your 30 days that keep you moving, and that is the extent of the contact.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there a community, group, or mastermind attached?</summary><div class="qa-answer">
+    <p>No. Deliberately. Groups create an obligation to show up and a place to talk about the work instead of doing it. The system is built so you can finish it without anyone else's schedule.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this a done-for-you service?</summary><div class="qa-answer">
+    <p>No. You receive physical materials and you do the work.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this a certification or a credential?</summary><div class="qa-answer">
+    <p>Not today. Completing the system does not certify you in anything. A certification track is planned but not available.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this an agency engagement?</summary><div class="qa-answer">
+    <p>No. Nothing is executed on your behalf. No campaigns are run, no funnels are built, no work is delivered into your business by someone else.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this an MLM, franchise, or business opportunity?</summary><div class="qa-answer">
+    <p>No. There is nothing to recruit, nothing to resell at the base level, and no territory. You are buying materials for your own business.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this a get-rich-quick system?</summary><div class="qa-answer">
+    <p>No. It is thirty days of decisions and work applied to a business you already run. Nothing here produces revenue without you doing something.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do you take equity, a percentage, or a success fee?</summary><div class="qa-answer">
+    <p>No. You pay once for the materials. Nothing else is owed and no claim is made on your business.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I hire you to run this in my business?</summary><div class="qa-answer">
+    <p>No. The only engagement that involves direct access is Private Advisory, and it is available only after you have completed the 30-day system on your own. It is not a way to skip the work.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I book a call to talk through whether it's right for me?</summary><div class="qa-answer">
+    <p>No, and this page is the reason. Everything a call would cover is written here, at length, so you can read it on your own schedule.</p>
+    <p>If you want a read on your specific business before you buy, take the <a href="/scorecard.html">free Growth Scorecard</a>. It scores all five phases and tells you where your gaps are. That is more useful than a conversation, and it takes three minutes.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why don't you offer calls before purchase?</summary><div class="qa-answer">
+    <p>Because a sales call would make this a different business. The price stays where it is precisely because there is no human sales process attached to a $67 product.</p>
+    <p>It is also a fit signal. This system requires you to work through decisions independently for thirty days. If you need a conversation to get to the starting line, the thirty days after it are going to be difficult.</p>
+  </div></details>
+</section>
+
+<!-- 3. WHO IT HELPS -->
+<section class="faq-section" id="who-it-helps">
+  <div class="section-eyebrow">Section 03</div>
+  <h2 class="section-headline">Who It Helps</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>Who is The SCALE Method built for?</summary><div class="qa-answer">
+    <p>Owners of established small businesses who have proven demand and are now hitting the limits of running the company on instinct. You have customers and revenue. What you do not have is a repeatable process that produces growth without you driving every piece of it.</p>
+  </div></details>
+
+  <details class="qa"><summary>What revenue range is this designed for?</summary><div class="qa-answer">
+    <p>Roughly <strong>$500K to $3M</strong> in annual revenue. The number matters less than the condition: you are past the survival stage, and the business still runs on your decisions rather than on a full executive team.</p>
+    <p>Use the range as a guide, not a gate. A $4M company where the owner still makes every call is a better fit than a $2M company with a real leadership layer already in place.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is this right for a startup or a pre-revenue business?</summary><div class="qa-answer">
+    <p>Probably not. Several phases assume you have customers to retain, revenue to expand, and operations to systematize. Without those, you will be filling in hypotheticals.</p>
+    <p>If you are pre-revenue, the book on its own is useful. Hold the workbook until you have something to run it against.</p>
+  </div></details>
+
+  <details class="qa"><summary>I'm a solopreneur with no team. Will this work?</summary><div class="qa-answer">
+    <p>Yes, with one adjustment. The Leverage phase covers delegation and team systems, and with no team you will apply it to automation, tools, and process documentation instead of people.</p>
+    <p>Solo owners often get the most out of Leverage, because they are the choke point by definition.</p>
+  </div></details>
+
+  <details class="qa"><summary>I have 25 employees. Is this too basic for me?</summary><div class="qa-answer">
+    <p>At that size you may already have parts of this in place. The value is in finding the phases you skipped. Most companies that size are strong in two or three phases and have never deliberately worked the others.</p>
+    <p>Take the scorecard first. If you score high across all five, you do not need this.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for service businesses?</summary><div class="qa-answer">
+    <p>Yes. Service businesses tend to see the fastest returns from the Customer and Leverage phases, since retention and owner dependency are usually the two live problems.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for product, e-commerce, or retail businesses?</summary><div class="qa-answer">
+    <p>Yes. The Action phase covers acquisition and revenue mechanics that apply directly, and the Leverage phase applies to fulfillment and inventory operations.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for trades and contractors?</summary><div class="qa-answer">
+    <p>Yes. Trades businesses commonly run entirely on the owner's presence and referrals. Strategy and Leverage tend to be where the gaps sit.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for professional practices?</summary><div class="qa-answer">
+    <p>Yes, for legal, dental, medical, accounting, and similar practices, with the caveat that your industry may restrict certain marketing tactics. Apply the Action phase within your regulatory limits. The decisions the phase asks you to make still hold.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for agencies and creative firms?</summary><div class="qa-answer">
+    <p>Yes. Agencies typically have strong Action and weak Leverage. The system will surface that quickly.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for restaurants, salons, and location-based businesses?</summary><div class="qa-answer">
+    <p>Yes. Some Action-phase tactics assume you can reach customers outside a physical radius, so you will adapt those to local. Customer and Endurance apply without modification.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work for online or digital-only businesses?</summary><div class="qa-answer">
+    <p>Yes. The framework is channel-agnostic. What changes is where you execute, not what you decide.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does this work outside the United States?</summary><div class="qa-answer">
+    <p>The framework does. Examples and references lean American, and some tactical specifics will need translating to your market.</p>
+    <p>Shipping is the practical limit. See the delivery section below before ordering from outside the US.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is my industry too specialized for a general framework?</summary><div class="qa-answer">
+    <p>Possibly, and you are better positioned than we are to judge it. The system operates at the level of business decisions rather than industry tactics: who you serve, how you keep them, where revenue comes from, what depends on you.</p>
+    <p>If your business is genuinely unlike others in those respects, a general framework will fight you.</p>
+  </div></details>
+
+  <details class="qa"><summary>I've been in business 20 years. Is there anything here for me?</summary><div class="qa-answer">
+    <p>Depends on what the twenty years produced. Long-tenured businesses often have deep expertise and thin systems, because everything got solved by the owner knowing what to do.</p>
+    <p>The scorecard will answer this faster than we can. If you score high across all five phases, keep your $67.</p>
+  </div></details>
+
+  <details class="qa"><summary>I've been in business 18 months. Am I too early?</summary><div class="qa-answer">
+    <p>Not necessarily. The question is whether you have enough customer history to work with. If you have repeat customers, revenue patterns you can see, and any process at all, you have enough.</p>
+  </div></details>
+
+  <details class="qa"><summary>My business is growing fine. Why would I need this?</summary><div class="qa-answer">
+    <p>You may not. The honest version: this is most valuable when growth is inconsistent or entirely dependent on you.</p>
+    <p>If growth is steady and the business runs without you in every decision, you are already doing what this system installs.</p>
+  </div></details>
+
+  <details class="qa"><summary>My business is declining. Is this the right time?</summary><div class="qa-answer">
+    <p>It can be, if the decline is a systems problem. Strategy and Customer are the phases that address a shrinking base.</p>
+    <p>If the decline is a cash emergency measured in weeks, address that first. A 30-day system is the wrong tool for an immediate crisis.</p>
+  </div></details>
+</section>
+
+<!-- 4. WHO DOES THE WORK -->
+<section class="faq-section" id="who-does-work">
+  <div class="section-eyebrow">Section 04</div>
+  <h2 class="section-headline">Who Does The Work</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>Who in the company should work through the system?</summary><div class="qa-answer">
+    <p>The owner, or the decision maker who runs operations. It has to be someone with the authority to change how the business works. Every phase ends in a decision that gets implemented.</p>
+    <p>Handing this to someone who has to seek approval for each change will stall it.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I hand this to my operations manager?</summary><div class="qa-answer">
+    <p>Yes, if that person genuinely runs operations and can make changes without asking. That is exactly who this is built for when the owner is not the operator.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can two people work through it together?</summary><div class="qa-answer">
+    <p>Yes, and it often goes better. One workbook, two people at the table, one set of decisions. Common pairing: owner and operations lead.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I need to involve my team?</summary><div class="qa-answer">
+    <p>Not to complete the work. You will involve them to implement parts of it, particularly in Leverage where you are moving work off your desk.</p>
+  </div></details>
+
+  <details class="qa"><summary>I have a business partner. Do we each need a copy?</summary><div class="qa-answer">
+    <p>Not necessarily. One workbook works if you go through it together. Buy two if you both want to record your own answers before comparing, which is a reasonable approach when partners disagree about direction.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if the owner isn't running day-to-day operations?</summary><div class="qa-answer">
+    <p>Then the operator should do the work and the owner should review the Strategy phase output. Strategy sets direction and that decision belongs to ownership. The rest is operational.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I use this with my clients if I'm a coach or fractional CFO?</summary><div class="qa-answer">
+    <p>You can use it in your own business, and you can recommend it. What you cannot do is teach it as your own or deliver it as part of a paid engagement. The framework is trademarked.</p>
+    <p>A licensing track for advisors is planned. Until it exists, the affiliate program is the way to work with us. Details are in the "What's Coming" section.</p>
+  </div></details>
+</section>
+
+<!-- 5. FIT -->
+<section class="faq-section" id="fit">
+  <div class="section-eyebrow">Section 05</div>
+  <h2 class="section-headline">Is It Right For Me</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>How do I know if this will work for my business?</summary><div class="qa-answer">
+    <p>Take the <a href="/scorecard.html">free Growth Scorecard</a>. It scores your business across all five phases and shows you where the gaps are. If you score low in two or more phases, the system has something to fix. If you score high across the board, it does not.</p>
+    <p>That is the closest thing to a straight answer available before purchase, and it costs nothing.</p>
+  </div></details>
+
+  <details class="qa"><summary>Who is this NOT a good fit for?</summary><div class="qa-answer">
+    <ul>
+      <li>Anyone expecting a coach, a call, or a person to answer to</li>
+      <li>Pre-revenue businesses with no customer base yet</li>
+      <li>Owners in an immediate cash crisis measured in weeks</li>
+      <li>People who want someone else to do the work</li>
+      <li>Anyone who has consistently bought business programs and not finished them</li>
+      <li>Businesses already running a structured operating system that works</li>
+    </ul>
+  </div></details>
+
+  <details class="qa"><summary>What are the signs I'm not ready yet?</summary><div class="qa-answer">
+    <p>You do not know where revenue came from last quarter. You cannot name your best customer segment. You are firefighting daily with no hour to spare. Or you are hoping the purchase itself creates momentum.</p>
+    <p>None of those are permanent. They just mean not this month.</p>
+  </div></details>
+
+  <details class="qa"><summary>What do I need in place before I start?</summary><div class="qa-answer">
+    <p>An operating business with customers. Thirty to sixty minutes a day. Authority to change how the business runs. A rough sense of your revenue and customer numbers, even if imprecise.</p>
+    <p>Nothing more than that.</p>
+  </div></details>
+
+  <details class="qa"><summary>I've tried frameworks before and never finished. What's different?</summary><div class="qa-answer">
+    <p>Two things, and neither is a guarantee. The end point is thirty days rather than a year, and every day has one defined task with a place to write the answer.</p>
+    <p>If you have abandoned several of these, look at why. If it was length or vagueness, this addresses both. If it was that you did not really want to do the work, nothing here changes that.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I don't have historical numbers or clean financials?</summary><div class="qa-answer">
+    <p>You can proceed with estimates. Several exercises will be less precise, and the Strategy phase in particular works better with real numbers.</p>
+    <p>Approximate answers still beat no answers. Note where you were guessing so you can revisit those later.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I don't know my numbers at all?</summary><div class="qa-answer">
+    <p>Then that is your first problem, and it is bigger than this system. You cannot make decisions about growth without knowing what the business currently does.</p>
+    <p>Get basic reporting in place first: monthly revenue, customer count, what you sell most. Then come back.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I need marketing experience?</summary><div class="qa-answer">
+    <p>No. The Action phase explains the mechanics as it goes. It assumes you know your business, not that you know marketing.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I need a budget to implement what it recommends?</summary><div class="qa-answer">
+    <p>Most of the system costs time, not money. Strategy, Customer, and Endurance are almost entirely decisions and process.</p>
+    <p>Action can involve spending if you choose paid acquisition, and Leverage can involve tools or hiring. Both have versions that cost nothing but your effort.</p>
+  </div></details>
+
+  <details class="qa"><summary>How much of this requires spending money?</summary><div class="qa-answer">
+    <p>None of it requires spending beyond the materials. The system is built around decisions you make and processes you install. Where a paid option exists, it is presented as an option.</p>
+  </div></details>
+</section>
+
+<!-- 6. SCORECARD -->
+<section class="faq-section" id="scorecard">
+  <div class="section-eyebrow">Section 06</div>
+  <h2 class="section-headline">The Growth Scorecard</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What is the SCALE Scorecard?</summary><div class="qa-answer">
+    <p>A free 25-question diagnostic that scores your business across all five SCALE phases and identifies which phase is holding back your growth the most.</p>
+  </div></details>
+
+  <details class="qa"><summary>How long does it take?</summary><div class="qa-answer">
+    <p>About three minutes.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does it measure?</summary><div class="qa-answer">
+    <p>Five questions per phase, covering the operational realities each phase addresses: direction and positioning, customer retention and expansion, revenue generation, operational leverage, and long-term momentum.</p>
+  </div></details>
+
+  <details class="qa"><summary>What do I get when I finish it?</summary><div class="qa-answer">
+    <p>Your Scale Score out of 100, a breakdown showing how you scored in each of the five phases, and identification of your weakest phase.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why do you need my email address?</summary><div class="qa-answer">
+    <p>To send your results and a short sequence of emails built around your weakest phase. The results are worth keeping, and the follow-up is where the useful context lives.</p>
+  </div></details>
+
+  <details class="qa"><summary>What will you do with my email address?</summary><div class="qa-answer">
+    <p>Send your results, send a nurture sequence relevant to your weakest phase, and send occasional updates. You can unsubscribe from any email. We do not sell or share your address.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is my scorecard information private?</summary><div class="qa-answer">
+    <p>Yes. Your responses are used to generate your results and segment which emails you receive. They are not published, shared, or sold.</p>
+  </div></details>
+
+  <details class="qa"><summary>What is a good score? What is a bad score?</summary><div class="qa-answer">
+    <p>Any phase scoring below 90 has meaningful room to improve. Most businesses score unevenly rather than uniformly low, which is the useful finding: the gap is usually concentrated in one or two phases.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does it mean if two phases score low?</summary><div class="qa-answer">
+    <p>Work the earlier one first. The phases are sequential, so a gap in Strategy limits what Customer work can accomplish. When two phases tie, the earlier phase is the one to address.</p>
+  </div></details>
+
+  <details class="qa"><summary>Should I take the scorecard before or after I buy?</summary><div class="qa-answer">
+    <p>Before. It tells you whether the system has anything to fix in your business, and it gives you a baseline to measure against when you finish.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I retake it? How often?</summary><div class="qa-answer">
+    <p>Yes, as often as you like. The useful rhythm is once before you start and once at day 30. The workbook includes a score retake page for exactly that.</p>
+  </div></details>
+
+  <details class="qa"><summary>How much should my score improve after one cycle?</summary><div class="qa-answer">
+    <p>No number is promised. Movement depends on where you started and how completely you did the work.</p>
+    <p>The more useful comparison is phase-level: the phase you focused on should move noticeably, and phases you did not touch should stay flat. That pattern tells you the work is doing what it should.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I need to buy anything to get my results?</summary><div class="qa-answer">
+    <p>No. The scorecard and your full results are free.</p>
+  </div></details>
+</section>
+
+<!-- 7. TIME -->
+<section class="faq-section" id="time">
+  <div class="section-eyebrow">Section 07</div>
+  <h2 class="section-headline">Time And Commitment</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>How much time per day does this take?</summary><div class="qa-answer">
+    <p>Thirty to sixty minutes. Some days are shorter. A few decision-heavy days in Strategy and Leverage run longer.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I miss a day?</summary><div class="qa-answer">
+    <p>Pick up where you left off. The sequence matters, the calendar does not. A thirty-day system finished in forty days is finished.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I go slower than 30 days?</summary><div class="qa-answer">
+    <p>Yes. The risk is losing momentum. Two days a week stretches this to fifteen weeks, and by week ten the Strategy decisions no longer feel connected to the Leverage work.</p>
+    <p>Slower is fine. Stalled is the thing to avoid.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I go faster than 30 days?</summary><div class="qa-answer">
+    <p>You can, but some days end in decisions that need to sit or need input from someone else. Compressing the whole thing into a weekend produces a completed workbook and not much else.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I'm already working 60 hours a week?</summary><div class="qa-answer">
+    <p>That is a symptom the Leverage phase directly addresses, and it is also the reason this will be hard to start.</p>
+    <p>The honest read: if you cannot find thirty minutes, do not buy yet. Find the thirty minutes first, even if it means something else gives for a month. The system cannot create the time for you.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there homework outside the daily work?</summary><div class="qa-answer">
+    <p>Not assigned homework, but some days produce actions that continue past that day. If Leverage tells you to document a process, the documenting happens on your own time.</p>
+  </div></details>
+
+  <details class="qa"><summary>What's the total time investment?</summary><div class="qa-answer">
+    <p>Roughly 20 to 30 hours across the 30 days for the core system. The Compound Workbook adds a further 60 days at a lighter daily load.</p>
+  </div></details>
+</section>
+
+<!-- 8. PRICING -->
+<section class="faq-section" id="pricing">
+  <div class="section-eyebrow">Section 08</div>
+  <h2 class="section-headline">What You Get And What It Costs</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What exactly is included in the system?</summary><div class="qa-answer">
+    <p>The core system is two physical items: <em>Scale Your Business in 30 Days</em> in paperback, and The 30-Day SCALE Workbook in paperback. Both ship to you.</p>
+    <p>You also receive the Phase S primer PDF by email immediately after ordering, so you can start before the books arrive.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why is the book part of it instead of the whole thing?</summary><div class="qa-answer">
+    <p>The book explains the reasoning. The workbook applies it. Reading without applying produces notes. Applying without understanding produces work you cannot adapt when circumstances change.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does the workbook do that the book doesn't?</summary><div class="qa-answer">
+    <p>It gives you the day-by-day sequence, the specific exercise for each day, and the space to record decisions. It also includes the starting score, phase capstones, and the retake at day 30.</p>
+    <p>The workbook is where the system becomes a record of your business rather than a book you read.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does it cost?</summary><div class="qa-answer">
+    <p><strong>$67</strong> for the core system: book plus 30-Day Workbook, both shipped.</p>
+  </div></details>
+
+  <details class="qa"><summary>What are the different ways to buy?</summary><div class="qa-answer">
+    <ul>
+      <li><strong>The System &mdash; $67.</strong> Book + 30-Day Workbook. The entry point and the one most people should choose.</li>
+      <li><strong>The Complete System &mdash; $177.</strong> Book + 30-Day Workbook + 90-Day Compound Workbook + 90 days of AI Advisor access.</li>
+      <li><strong>90-Day Compound Workbook &mdash; $67</strong> added at checkout, or <strong>$87</strong> on its own later.</li>
+      <li><strong>AI Advisor &mdash; $29/month</strong>, available any time.</li>
+    </ul>
+  </div></details>
+
+  <details class="qa"><summary>What's in the Complete System bundle and why is it priced that way?</summary><div class="qa-answer">
+    <p>All three physical items plus 90 days of AI Advisor access. Bought separately on this site those pieces total $221. The bundle is $177.</p>
+    <p>That is the actual number, not an inflated anchor. The discount exists because it is one order to fulfill instead of three.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I need the second workbook?</summary><div class="qa-answer">
+    <p>Not to complete the 30-day system. It covers days 31&ndash;90 and exists to make the process permanent rather than a one-time push.</p>
+    <p>If you are unsure, start with the $67 system. You can add it later.</p>
+  </div></details>
+
+  <details class="qa"><summary>What's the difference between the two workbooks?</summary><div class="qa-answer">
+    <p>The 30-Day Workbook takes you through one complete SCALE cycle and installs the systems. The 90-Day Compound Workbook runs three further cycles across days 31&ndash;90, tuning what you built and compounding the result.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I buy the second workbook later?</summary><div class="qa-answer">
+    <p>Yes, at $87 standalone. Taking it at checkout as an add-on is $67, which is the cheapest it gets.</p>
+  </div></details>
+
+  <details class="qa"><summary>I bought the entry system. Can I upgrade to the Complete System?</summary><div class="qa-answer">
+    <p>Yes, within <strong>30 days of your original purchase</strong>. Email us and we will credit what you paid toward the $177 bundle and send you a checkout link for the difference.</p>
+    <p>After 30 days the upgrade credit no longer applies, and the individual items are available at their normal prices.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there a payment plan?</summary><div class="qa-answer">
+    <p>No. At $67 for the entry system, a payment plan would cost more in processing than it would help.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there a digital-only or PDF version?</summary><div class="qa-answer">
+    <p>No. The workbooks are physical only.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why are the workbooks physical instead of downloadable?</summary><div class="qa-answer">
+    <p>Because downloaded workbooks do not get completed. A PDF goes into a folder. A book sits on your desk where you see it every morning, and writing in it by hand keeps you present with the decision.</p>
+    <p>It costs more to produce and ship. It is worth it because completion rate is the whole game.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do you offer bulk or team pricing?</summary><div class="qa-answer">
+    <p>Not as a listed option. If you want multiple copies for a leadership team, email us with the quantity and we will work it out.</p>
+  </div></details>
+</section>
+
+<!-- 9. DELIVERY -->
+<section class="faq-section" id="delivery">
+  <div class="section-eyebrow">Section 09</div>
+  <h2 class="section-headline">Delivery And Access</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>How and when do my materials arrive?</summary><div class="qa-answer">
+    <p>Orders are fulfilled by hand. Your books are ordered and shipped to you directly, and typical delivery in the US runs about one to two weeks from order.</p>
+    <p>You receive an email immediately at purchase so you are not waiting empty-handed.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I start before my books arrive?</summary><div class="qa-answer">
+    <p>Yes, and you should. Your first email includes the Phase S primer PDF, which covers the Strategy phase, days 1 through 7.</p>
+    <p>That is a full week of work. Your books will be with you well before you need them.</p>
+  </div></details>
+
+  <details class="qa"><summary>What is the Phase S primer?</summary><div class="qa-answer">
+    <p>A PDF covering the Strategy phase, sent immediately after purchase. It is not a sample or a teaser. It is the real first seven days so your thirty days start the moment you order.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do you ship internationally?</summary><div class="qa-answer">
+    <p>Contact us before ordering from outside the US. International shipping is handled case by case, timelines are longer, and additional cost may apply depending on the destination.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if my order arrives damaged or never arrives?</summary><div class="qa-answer">
+    <p>We replace it. Email us with your order details and a photo if it arrived damaged, and a replacement goes out. No cost to you.</p>
+    <p>This is a replacement, not a refund. See the policies section below.</p>
+  </div></details>
+
+  <details class="qa"><summary>How do I read the book while I wait?</summary><div class="qa-answer">
+    <p><em>Scale Your Business in 30 Days</em> is available on Kindle Unlimited, which means it reads free if you are a KU member. It is also on Audible. Your post-purchase email includes the links.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I already own the book?</summary><div class="qa-answer">
+    <p>You will receive a second copy as part of the system. There is no book-excluded version, and no discount for owning it.</p>
+    <p>Owners who already have it usually keep one at the office and one at home, or hand the spare to their operations lead.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does the audiobook count as owning the book?</summary><div class="qa-answer">
+    <p>For understanding the framework, yes. For working the system, the print copy is better. You will be moving between the book and the workbook constantly, and audio makes that awkward.</p>
+  </div></details>
+</section>
+
+<!-- 10. AI ADVISOR -->
+<section class="faq-section" id="advisor">
+  <div class="section-eyebrow">Section 10</div>
+  <h2 class="section-headline">The AI Advisor</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What is the AI Advisor?</summary><div class="qa-answer">
+    <p>A web app trained on the book and the system. You ask questions about any phase, day, or exercise and get answers drawn from the source material.</p>
+    <p>It is the "I'm on day 14 and I don't understand this exercise" tool.</p>
+  </div></details>
+
+  <details class="qa"><summary>What can I ask it?</summary><div class="qa-answer">
+    <p>Anything about the framework: what a phase is trying to accomplish, how an exercise applies to your type of business, what a day means in practice, how the phases connect.</p>
+  </div></details>
+
+  <details class="qa"><summary>What can't it do?</summary><div class="qa-answer">
+    <p>It does not know your business, your numbers, or your customers. It does not remember your previous sessions, and it will not make decisions for you.</p>
+    <p>It explains the system. You apply it.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is it a replacement for reading the book?</summary><div class="qa-answer">
+    <p>No. It answers questions about material you are working through. Without the book and workbook, there is nothing for it to clarify.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do I need it to complete the system?</summary><div class="qa-answer">
+    <p>No. The system is complete without it. It is a convenience for people who prefer asking over searching.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does it cost and how do I cancel?</summary><div class="qa-answer">
+    <p>$29 per month. Cancel any time from your subscription management link. You keep access through the period you have already paid for, and you are not billed again.</p>
+    <p>Subscription payments are not refunded, including partial months. Cancelling stops future billing.</p>
+  </div></details>
+
+  <details class="qa"><summary>What happens when my included access period ends?</summary><div class="qa-answer">
+    <p>Complete System buyers get 90 days included. At the end of that window access ends and you are shown the option to continue at $29 per month.</p>
+    <p>Nothing charges automatically. Included access expires rather than converting to a subscription.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is my business information stored or used to train anything?</summary><div class="qa-answer">
+    <p>Your conversations are not used to train models and are not shared. As a general practice with any AI tool, avoid pasting in anything you would not want stored, such as customer records or financial account details.</p>
+  </div></details>
+
+  <details class="qa"><summary>Does it give advice specific to my business?</summary><div class="qa-answer">
+    <p>It can apply the framework to context you describe, but it is working only from what you tell it in that conversation. It has no independent knowledge of your business and its answers are only as good as the context you provide.</p>
+  </div></details>
+</section>
+
+<!-- 11. RESULTS -->
+<section class="faq-section" id="results">
+  <div class="section-eyebrow">Section 11</div>
+  <h2 class="section-headline">Results And Expectations</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What results should I expect?</summary><div class="qa-answer">
+    <p>At the end of thirty days you will have documented positioning, a defined customer retention approach, an identified revenue engine, at least one significant task moved off your desk, and a feedback loop you can run.</p>
+    <p>Those are outputs of doing the work. Revenue is downstream of them and moves on its own schedule.</p>
+  </div></details>
+
+  <details class="qa"><summary>Will this increase my revenue?</summary><div class="qa-answer">
+    <p>It can, and it depends on your business, your market, and how completely you implement.</p>
+    <p>What the system reliably does is remove the guesswork about where to focus. Whether that produces revenue depends on execution after day 30.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there a growth guarantee?</summary><div class="qa-answer">
+    <p>No. No revenue target is promised, no percentage of growth is guaranteed, and no timeline to a specific result is claimed.</p>
+    <p>Anyone guaranteeing revenue growth in your business does not control the variables that produce it. Your market, your execution, and your team all sit outside what a workbook can determine.</p>
+    <p>What is committed to is the system itself: a complete, sequenced 30-day process with a defined output for every day.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do you guarantee results?</summary><div class="qa-answer">
+    <p>No outcome is guaranteed. The materials are guaranteed to arrive complete and undamaged, and we replace them if they do not.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I do the work and nothing changes?</summary><div class="qa-answer">
+    <p>Start with the scorecard retake. If your phase scores moved but revenue has not, that is normal at day 30. Operational change precedes financial change, usually by a quarter or more.</p>
+    <p>If the scores did not move either, the likely cause is that decisions were recorded but not implemented. That is the most common failure and it is fixable by going back to the phase and executing what you wrote down.</p>
+  </div></details>
+
+  <details class="qa"><summary>Are there case studies or testimonials?</summary><div class="qa-answer">
+    <p>The process itself has years of results behind it from consulting engagements, though most of that work sits under client confidentiality. The book has an established readership and review history.</p>
+    <p>Rather than present something thin as though it were substantial: the case study library is not built yet. If documented outcomes are what you need before buying, wait.</p>
+  </div></details>
+
+  <details class="qa"><summary>How do I measure whether it worked?</summary><div class="qa-answer">
+    <p>Three ways. Your scorecard retake at day 30 against your starting score. The completed capstone for each phase. And the practical test: name a task that no longer requires you.</p>
+  </div></details>
+
+  <details class="qa"><summary>What is realistic progress in the first cycle?</summary><div class="qa-answer">
+    <p>One phase materially improved, one or two systems genuinely installed, and clear visibility into what you deferred. That is a good first cycle.</p>
+    <p>Expecting all five phases to transform at once is the fastest way to be disappointed by real progress.</p>
+  </div></details>
+
+  <details class="qa"><summary>How long before I see revenue impact versus operational impact?</summary><div class="qa-answer">
+    <p>Operational impact is immediate and visible within the thirty days. Revenue impact typically trails by one to two quarters, because the changes that produce it are retention, positioning, and consistency, and those compound rather than spike.</p>
+  </div></details>
+</section>
+
+<!-- 12. POLICIES -->
+<section class="faq-section" id="policies">
+  <div class="section-eyebrow">Section 12</div>
+  <h2 class="section-headline">Policies And Support</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What is your refund policy?</summary><div class="qa-answer">
+    <p><strong>All sales are final. Refunds are not offered.</strong></p>
+    <p>This is not a try-it-and-see purchase. It is a system to implement, and the material is the same whether you work it or leave it on the shelf. That page above exists so you can make an informed decision before you buy rather than after.</p>
+    <p>If your order arrives damaged or does not arrive, we replace it. That is covered below.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if my order arrives damaged or goes missing?</summary><div class="qa-answer">
+    <p>We send a replacement at no cost. Email us with your order details, plus a photo if the damage is visible. This applies to damaged, defective, and lost shipments.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I ordered the wrong thing?</summary><div class="qa-answer">
+    <p>Email us before it ships and we will sort it out. If you meant to buy the Complete System and bought the entry system, see the upgrade path in the pricing section: within 30 days we credit what you paid toward the bundle.</p>
+  </div></details>
+
+  <details class="qa"><summary>What kind of support is available if I get stuck?</summary><div class="qa-answer">
+    <p>Support covers orders, shipping, and access. It does not cover working through the exercises, since that would make this a coaching relationship.</p>
+    <p>For questions about the material itself, the AI Advisor exists for exactly that purpose.</p>
+  </div></details>
+
+  <details class="qa"><summary>How do I contact you and how fast will you respond?</summary><div class="qa-answer">
+    <p>Email is the channel. Responses generally come within one to two business days.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I get help interpreting my scorecard results?</summary><div class="qa-answer">
+    <p>Your results include the interpretation: your score per phase, your weakest phase, and what that phase addresses. The email sequence that follows goes deeper on that phase specifically.</p>
+    <p>Individual interpretation of your results is not offered, since that is consulting.</p>
+  </div></details>
+</section>
+
+<!-- 13. PRIVATE ADVISORY -->
+<section class="faq-section" id="advisory">
+  <div class="section-eyebrow">Section 13</div>
+  <h2 class="section-headline">Private Advisory</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>What is Private Advisory?</summary><div class="qa-answer">
+    <p>A bounded 60-day engagement with direct access to the creator of the system, applied to your specific business. Weekly calls plus direct email access, aligned to the Compound Workbook cycle.</p>
+    <p>It is the only part of The SCALE Method that involves a person.</p>
+  </div></details>
+
+  <details class="qa"><summary>Who qualifies for it?</summary><div class="qa-answer">
+    <p>Owners who have completed the 30-day system independently and want to go further on their specific situation. Completion is the gate.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why can't I apply before completing the system?</summary><div class="qa-answer">
+    <p>Because sixty days spent covering material you could have worked through on your own is a poor use of both parties' time. Completing the system means the conversation starts from your actual situation rather than from the basics.</p>
+    <p>It also filters. People who finish the thirty days are the ones who implement.</p>
+  </div></details>
+
+  <details class="qa"><summary>How many people do you take?</summary><div class="qa-answer">
+    <p>Two per 60-day cycle. That is the ceiling and it is not flexible.</p>
+  </div></details>
+
+  <details class="qa"><summary>What does it cost and how long does it run?</summary><div class="qa-answer">
+    <p>$2,500 flat for 60 days. Weekly calls and direct email access throughout.</p>
+  </div></details>
+
+  <details class="qa"><summary>How do I apply?</summary><div class="qa-answer">
+    <p>There is a short application on the Private Advisory page. Every one is read personally. Strong fits hear back within 48 hours to schedule a 20-minute alignment conversation.</p>
+  </div></details>
+
+  <details class="qa"><summary>What if I'm not accepted?</summary><div class="qa-answer">
+    <p>You are told directly, without a runaround. If the spots are simply full, you can join the waitlist for the next cycle.</p>
+  </div></details>
+</section>
+
+<!-- 14. AUTHOR -->
+<section class="faq-section" id="author">
+  <div class="section-eyebrow">Section 14</div>
+  <h2 class="section-headline">The Author</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>Who is T.M. Parish?</summary><div class="qa-answer">
+    <p>An 8&times; bestselling author, entrepreneur, former small business president, and marketing expert whose work spans multiple industries. She spent years as a consultant and fractional leader implementing this process directly inside small businesses before writing <em>Scale Your Business in 30 Days</em> and building The SCALE Method from it.</p>
+  </div></details>
+
+  <details class="qa"><summary>What qualifies you to teach this?</summary><div class="qa-answer">
+    <p>Years of implementing this exact process inside other people's businesses as a consultant and fractional leader, on top of running and growing companies directly.</p>
+    <p>The framework came out of that work rather than out of theory. It is organized around the decisions an owner actually faces, in the order they actually face them, because that is the order it was delivered in when clients were paying for it.</p>
+  </div></details>
+
+  <details class="qa"><summary>Why build this as a system instead of a coaching practice?</summary><div class="qa-answer">
+    <p>Because the consulting version already existed, and it had a ceiling. One person can only sit in so many businesses at once, and the price that requires puts it out of reach for most of the owners who need it.</p>
+    <p>Productizing it removes both limits. The same process that cost five figures as an engagement reaches an owner in a $700K business for $67, and it reaches a hundred of them at the same time.</p>
+    <p>It also keeps the product honest. When there is no call to upsell you to, the materials have to work on their own.</p>
+  </div></details>
+</section>
+
+<!-- 15. FUTURE -->
+<section class="faq-section" id="future">
+  <div class="section-eyebrow">Section 15</div>
+  <h2 class="section-headline">What's Coming</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>Is there a course?</summary><div class="qa-answer">
+    <p>In development. It will follow the same five-phase sequence in a self-paced format for people who prefer learning by video.</p>
+    <p>It is an alternative delivery of the same system, not additional content, and it is not required.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there a membership?</summary><div class="qa-answer">
+    <p>Planned, after the course. Nothing to sign up for yet.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I become certified in The SCALE Method?</summary><div class="qa-answer">
+    <p>Not yet. A certification track is on the roadmap for advisors and consultants who want to deliver the framework to their own clients. It does not exist today and no pre-orders are being taken.</p>
+  </div></details>
+
+  <details class="qa"><summary>Can I license this to use with my own clients?</summary><div class="qa-answer">
+    <p>Not currently. Licensing follows certification and both are gated behind trademark registration completing.</p>
+    <p>If you advise small businesses and want to be in the first group, get on the email list and say so when you reply to any email.</p>
+  </div></details>
+
+  <details class="qa"><summary>How do I get notified when those become available?</summary><div class="qa-answer">
+    <p>The email list. Take the <a href="/scorecard.html">scorecard</a> and you are on it. Everything gets announced there first.</p>
+  </div></details>
+
+  <details class="qa"><summary>Is there an affiliate or partner program?</summary><div class="qa-answer">
+    <p>Yes, for the right partners: bookkeepers, fractional CFOs, and advisors who serve small business owners and do not compete with the system. Email us for details.</p>
+  </div></details>
+</section>
+
+<!-- 16. PRACTICAL -->
+<section class="faq-section" id="practical">
+  <div class="section-eyebrow">Section 16</div>
+  <h2 class="section-headline">Orders And Account Help</h2>
+  <div class="divider"></div>
+
+  <details class="qa"><summary>How do I access my account or the AI Advisor?</summary><div class="qa-answer">
+    <p>If your purchase included AI Advisor access, you receive an email invitation to set your password. After that you sign in at <strong>the30dayscale.com/app</strong>.</p>
+  </div></details>
+
+  <details class="qa"><summary>I bought something and didn't get an email. What now?</summary><div class="qa-answer">
+    <p>Check spam and promotions first, since the first email carries a PDF attachment and gets filtered more often than the rest.</p>
+    <p>If it is not there, email us with the address you used at checkout and we will resend it.</p>
+  </div></details>
+
+  <details class="qa"><summary>How do I unsubscribe from emails but keep my product access?</summary><div class="qa-answer">
+    <p>Use the unsubscribe link in any email. That stops marketing emails and does not affect your AI Advisor access, your order, or your shipment. Order and shipping notices still reach you.</p>
+  </div></details>
+
+  <details class="qa"><summary>Do you sell or share my data?</summary><div class="qa-answer">
+    <p>No. Your email address and scorecard responses are used to deliver your results, run your email sequence, and fulfill your order. They are not sold or shared.</p>
+  </div></details>
+
+  <details class="qa"><summary>What payment methods do you accept?</summary><div class="qa-answer">
+    <p>Checkout runs through Gumroad, which accepts major credit and debit cards and PayPal. Available methods can vary by country.</p>
+  </div></details>
+</section>
+
+</div>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2 class="final-cta-headline">Still deciding?<br /><span>Let the scorecard decide.</span></h2>
+  <p class="final-cta-sub">Three minutes, no cost. It scores all five phases and tells you whether this system has anything to fix in your business.</p>
+  <div class="final-cta-wrap">
+    <a href="/scorecard.html" class="hero-btn">Get My Free Growth Score <span>&rarr;</span></a>
+    <div class="final-meta">Free &middot; 3 minutes &middot; Instant results</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">The <span>SCALE</span> Method&trade;</div>
+  <div class="footer-copy">&copy; T.M. Parish. All rights reserved.</div>
+  <a href="https://www.the30dayscale.com" class="footer-link">the30dayscale.com</a>
+</footer>
+
+<script>
+(function () {
+  var search = document.getElementById('faqSearch');
+  var noResults = document.getElementById('noResults');
+  if (!search) return;
+
+  var items = Array.prototype.slice.call(document.querySelectorAll('.qa'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.faq-section'));
+
+  function run() {
+    var q = search.value.trim().toLowerCase();
+    var hits = 0;
+
+    items.forEach(function (item) {
+      if (!q) { item.classList.remove('is-hidden'); item.open = false; return; }
+      var text = item.textContent.toLowerCase();
+      var match = text.indexOf(q) !== -1;
+      item.classList.toggle('is-hidden', !match);
+      item.open = match;
+      if (match) hits++;
+    });
+
+    sections.forEach(function (sec) {
+      if (!q) { sec.style.display = ''; return; }
+      var visible = sec.querySelectorAll('.qa:not(.is-hidden)').length;
+      sec.style.display = visible ? '' : 'none';
+    });
+
+    if (noResults) noResults.classList.toggle('is-visible', !!q && hits === 0);
+  }
+
+  search.addEventListener('input', run);
+})();
+</script>
+
+</body>
+</html>

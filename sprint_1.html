@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 30-Day SCALE Sprint &mdash; Founding Cohort</title>
+<meta name="description" content="A guided 30-day implementation cohort for owners of $500K&ndash;$3M businesses. Find the constraint holding growth back, fix it, and measure what changed. Begins October 6.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #fb7e2a;
+    --navy: #003366;
+    --navy-dark: #002244;
+    --white: #ffffff;
+    --off-white: #f7f8fa;
+    --ink: #1f2733;
+    --muted: #6b7a93;
+    --line: #dde3ec;
+    --tint: #fff3e9;
+    --bluetint: #eef3f9;
+    --hero: 'League Gothic', 'Arial Narrow', sans-serif;
+    --body: 'Montserrat', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); color: var(--ink); background: var(--white); }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    padding: 0 5%;
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid var(--orange);
+  }
+  .nav-logo {
+    font-family: var(--hero); font-size: 22px; font-weight: 400;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--white);
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-link { font-family: var(--body); font-size: 12px; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: rgba(255,255,255,0.70); text-decoration: none; transition: color .2s; }
+  .nav-link:hover { color: var(--orange); }
+  @media (max-width: 600px) {
+    .nav { height: auto; flex-wrap: wrap; padding: 12px 5%; gap: 10px; }
+    .nav-links { display: flex; width: 100%; gap: 16px; order: 3; }
+    .nav-cta { order: 2; }
+  }
+  .nav-cta {
+    background: var(--orange); color: var(--navy);
+    font-family: var(--body); font-weight: 700; font-size: 12px;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 10px 22px; border-radius: 4px; text-decoration: none;
+    transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .88; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 90px 5% 80px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: "SCALE";
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--hero); font-size: 38vw; line-height: 1;
+    color: rgba(255,255,255,.03); pointer-events: none;
+    letter-spacing: -.02em; white-space: nowrap;
+  }
+  .hero-eyebrow {
+    font-family: var(--body); font-weight: 600; font-size: 12px;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 20px; position: relative; line-height: 1.7;
+  }
+  .hero-title {
+    font-family: var(--hero); font-weight: 400;
+    font-size: clamp(44px, 6.2vw, 78px); line-height: .90;
+    text-transform: uppercase; color: var(--white);
+    margin: 0 auto 28px; max-width: 15ch; position: relative;
+  }
+  .hero-title span { color: var(--orange); }
+  .hero-sub {
+    font-size: 16px; color: #cfe0f2; line-height: 1.65;
+    max-width: 640px; margin: 0 auto 36px; position: relative;
+  }
+  .hero-sub strong { color: var(--white); }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-primary {
+    background: var(--orange); color: var(--navy);
+    font-family: var(--body); font-weight: 700; font-size: 13px;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 15px 32px; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .88; }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 2px solid rgba(255,255,255,.3);
+    font-family: var(--body); font-weight: 600; font-size: 13px;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 13px 30px; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .hero-support {
+    position: relative; margin-top: 22px;
+    font-size: 13px; color: #9fb4cc; letter-spacing: .02em;
+  }
+  .hero-support strong { color: var(--white); font-weight: 600; }
+
+  /* PHASE STRIP */
+  .phase-strip { background: var(--orange); display: flex; justify-content: center; padding: 0; overflow: hidden; }
+  .phase-strip-inner { display: flex; width: 100%; max-width: 900px; }
+  .ps-item { flex: 1; padding: 14px 8px; text-align: center; border-right: 1px solid rgba(0,51,102,.2); }
+  .ps-item:last-child { border-right: none; }
+  .ps-letter { font-family: var(--hero); font-weight: 400; font-size: 28px; line-height: 1; color: var(--navy); display: block; }
+  .ps-word { font-family: var(--body); font-weight: 600; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy-dark); opacity: .7; display: block; margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  .wrap-narrow { max-width: 760px; margin: 0 auto; }
+  .center { text-align: center; }
+  .section-eyebrow {
+    font-family: var(--body); font-weight: 600; font-size: 11px;
+    letter-spacing: .28em; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--hero); font-weight: 400;
+    font-size: clamp(34px, 4.6vw, 52px); line-height: .94;
+    text-transform: uppercase; color: var(--navy);
+    margin-bottom: 20px;
+  }
+  .section-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 620px; margin-bottom: 32px; }
+  .center .section-sub { margin-left: auto; margin-right: auto; }
+  .rule { height: 3px; width: 60px; background: var(--orange); margin-bottom: 28px; }
+  .center .rule { margin-left: auto; margin-right: auto; }
+  .body-text { font-size: 15px; color: var(--ink); line-height: 1.75; margin-bottom: 16px; }
+  .body-text.muted { color: var(--muted); }
+  .body-text strong { color: var(--navy); font-weight: 600; }
+
+  /* KEY FACTS BAR */
+  .facts { background: var(--bluetint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0 5%; }
+  .facts-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .fact { padding: 26px 16px; text-align: center; border-right: 1px solid var(--line); }
+  .fact:last-child { border-right: none; }
+  .fact-label { font-family: var(--body); font-weight: 600; font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .fact-value { font-family: var(--hero); font-size: 26px; line-height: 1.05; color: var(--navy); text-transform: uppercase; }
+  .fact-value span { color: var(--orange); }
+  .fact-note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* PROBLEM */
+  .problem-section { background: var(--off-white); }
+  .symptom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 32px 0 36px; }
+  .symptom {
+    background: var(--white); border: 1px solid var(--line); border-left: 3px solid var(--orange);
+    padding: 16px 18px; font-size: 13.5px; color: var(--ink); line-height: 1.5;
+  }
+  .pullquote {
+    border-left: 4px solid var(--orange); padding: 4px 0 4px 22px; margin: 30px 0;
+    font-family: var(--hero); font-size: clamp(24px, 3vw, 32px); line-height: 1.05;
+    text-transform: uppercase; color: var(--navy);
+  }
+
+  /* PHASES */
+  .phase-list { display: flex; flex-direction: column; gap: 0; margin-top: 40px; border-top: 1px solid var(--line); }
+  .phase-row { display: grid; grid-template-columns: 84px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .phase-letter {
+    font-family: var(--hero); font-size: 46px; line-height: .85; color: var(--orange);
+    display: flex; align-items: baseline; gap: 0;
+  }
+  .phase-name { font-family: var(--body); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy); margin-bottom: 6px; }
+  .phase-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* CAPSTONES */
+  .capstone-section { background: var(--navy); }
+  .capstone-section .section-title { color: var(--white); }
+  .capstone-section .section-sub { color: #9fb4cc; }
+  .capstone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 42px; }
+  .cap {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    border-top: 4px solid var(--orange); padding: 26px 24px 28px;
+    position: relative; overflow: hidden;
+  }
+  .cap::before {
+    content: ""; position: absolute; top: 0; right: 0; width: 120px; height: 120px;
+    background: radial-gradient(circle at 100% 0%, rgba(251,126,42,.12), transparent 70%);
+  }
+  .cap-tag {
+    display: inline-block; font-family: var(--body); font-weight: 700; font-size: 9px;
+    letter-spacing: .18em; text-transform: uppercase; background: rgba(251,126,42,.15);
+    color: var(--orange); padding: 4px 10px; border-radius: 20px; margin-bottom: 14px;
+  }
+  .cap-title { font-family: var(--hero); font-size: 26px; font-weight: 400; text-transform: uppercase; color: var(--white); line-height: .98; margin-bottom: 10px; }
+  .cap-desc { font-size: 13px; color: #cfe0f2; line-height: 1.6; }
+  .capstone-foot {
+    margin-top: 34px; padding: 22px 26px; border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.03); font-size: 14px; color: #cfe0f2; line-height: 1.65;
+  }
+  .capstone-foot strong { color: var(--white); }
+
+  /* HOW IT WORKS */
+  .steps { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; }
+  .step-num {
+    width: 34px; height: 34px; background: var(--navy); border-radius: 4px; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--hero); font-size: 19px; color: var(--orange); line-height: 1;
+  }
+  .step-text { font-size: 14.5px; color: var(--ink); line-height: 1.5; padding-top: 8px; }
+
+  /* CALENDAR */
+  .cal-section { background: var(--off-white); }
+  .cal-scroll { overflow-x: auto; margin-top: 36px; -webkit-overflow-scrolling: touch; }
+  table.cal { width: 100%; border-collapse: collapse; min-width: 620px; background: var(--white); }
+  table.cal th {
+    background: var(--navy); color: var(--white); text-align: left;
+    font-family: var(--body); font-weight: 700; font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; padding: 13px 16px;
+  }
+  table.cal td { padding: 15px 16px; font-size: 13.5px; color: var(--ink); border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+  table.cal tr:last-child td { border-bottom: none; }
+  table.cal td.session { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  table.cal td.date { white-space: nowrap; color: var(--navy); font-weight: 600; }
+  .cal-note { font-size: 13px; color: var(--muted); margin-top: 18px; line-height: 1.6; }
+
+  /* INCLUDED */
+  .incl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; margin-top: 36px; }
+  .incl { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink); line-height: 1.5; }
+  .incl::before { content: "›"; color: var(--orange); font-weight: 700; font-size: 17px; line-height: 1.2; flex: none; }
+
+  /* FIT */
+  .fit-section { background: var(--tint); }
+  .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
+  .fit-card { background: var(--white); border: 1px solid var(--line); padding: 30px 28px; }
+  .fit-card.yes { border-top: 4px solid var(--orange); }
+  .fit-card.no { border-top: 4px solid var(--navy); }
+  .fit-head { font-family: var(--hero); font-size: 24px; text-transform: uppercase; color: var(--navy); line-height: 1; margin-bottom: 18px; }
+  .fit-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .fit-list li { font-size: 13.5px; color: var(--ink); line-height: 1.55; padding-left: 20px; position: relative; }
+  .fit-card.yes .fit-list li::before { content: "✓"; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+  .fit-card.no .fit-list li::before { content: "×"; position: absolute; left: 0; color: var(--muted); font-weight: 700; font-size: 15px; }
+
+  /* FOUNDING + INVESTMENT */
+  .invest-section { background: var(--navy); }
+  .invest-section .section-title { color: var(--white); }
+  .invest-section .section-sub { color: #9fb4cc; }
+  .price-box {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    border-top: 4px solid var(--orange); padding: 42px 38px; max-width: 620px;
+    margin: 40px auto 0; text-align: center;
+  }
+  .price-eyebrow { font-family: var(--body); font-weight: 600; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
+  .price-amount { font-family: var(--hero); font-size: 68px; line-height: 1; color: var(--white); margin-bottom: 6px; }
+  .price-amount span { color: var(--orange); }
+  .price-note { font-size: 13px; color: #9fb4cc; margin-bottom: 26px; }
+  .price-lines { text-align: left; display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); }
+  .price-lines li { list-style: none; font-size: 13.5px; color: #cfe0f2; line-height: 1.55; padding-left: 20px; position: relative; }
+  .price-lines li::before { content: "›"; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+  .price-sub { font-size: 12.5px; color: #9fb4cc; margin-top: 16px; line-height: 1.6; }
+
+  .founding-box {
+    max-width: 760px; margin: 0 auto; background: var(--white);
+    border: 1px solid var(--line); border-left: 4px solid var(--orange); padding: 34px 32px;
+  }
+
+  /* AFTER 30 */
+  .after-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
+  .after-card { border: 1px solid var(--line); border-top: 4px solid var(--orange); padding: 28px 26px; }
+  .after-title { font-family: var(--hero); font-size: 24px; text-transform: uppercase; color: var(--navy); line-height: 1; margin-bottom: 12px; }
+  .after-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* AUTHOR */
+  .author-section { background: var(--off-white); }
+  .author-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  .author-rule { height: 3px; width: 60px; background: var(--orange); margin: 0 auto 28px; }
+  .author-bio { font-size: 15px; color: var(--muted); line-height: 1.75; max-width: 600px; margin: 0 auto; }
+  .author-bio strong { color: var(--navy); font-weight: 600; }
+  .author-creds { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 26px 0 0; }
+  .cred-pill {
+    font-family: var(--body); font-weight: 600; font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+    border: 1.5px solid var(--navy); color: var(--navy);
+  }
+  .cred-pill.orange { border-color: var(--orange); color: var(--orange); }
+
+  /* FAQ */
+  .faq-list { margin-top: 36px; border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-item summary {
+    cursor: pointer; list-style: none; padding: 20px 40px 20px 0; position: relative;
+    font-family: var(--body); font-weight: 600; font-size: 15px; color: var(--navy); line-height: 1.4;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    color: var(--orange); font-size: 24px; font-weight: 400; line-height: 1;
+  }
+  .faq-item[open] summary::after { content: "–"; }
+  .faq-item summary:hover { color: var(--orange); }
+  .faq-answer { padding: 0 40px 24px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* FINAL CTA */
+  .final-cta { background: var(--navy); position: relative; overflow: hidden; text-align: center; }
+  .final-cta::before {
+    content: "SCALE"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: var(--hero); font-size: 34vw; line-height: 1; color: rgba(255,255,255,.03);
+    pointer-events: none; letter-spacing: -.02em; white-space: nowrap;
+  }
+  .final-cta .section-title { color: var(--white); position: relative; max-width: 20ch; margin: 0 auto 20px; }
+  .final-cta .section-title span { color: var(--orange); }
+  .final-sub { font-size: 16px; color: #cfe0f2; line-height: 1.65; max-width: 560px; margin: 0 auto 34px; position: relative; }
+  .final-support { position: relative; margin-top: 20px; font-size: 13px; color: #9fb4cc; }
+  .final-support strong { color: var(--white); font-weight: 600; }
+
+  /* APPLY ANCHOR */
+  .apply-anchor { display: block; position: relative; top: -80px; visibility: hidden; }
+
+  /* APPLICATION FORM */
+  .apply-section { background: var(--off-white); }
+  .apply-inner { max-width: 700px; margin: 0 auto; }
+  .apply-intro { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 44px; max-width: 580px; }
+  .form-section-label {
+    font-family: var(--hero); font-size: 22px; color: var(--navy);
+    text-transform: uppercase; letter-spacing: .04em; margin-bottom: 22px;
+  }
+  .form-group { margin-bottom: 24px; }
+  .form-label {
+    display: block; font-family: var(--body); font-weight: 600; font-size: 11px;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px;
+  }
+  .form-label span { color: var(--orange); }
+  .form-input, .form-textarea, .form-select {
+    width: 100%; font-family: var(--body); font-size: 14px; color: var(--ink);
+    background: var(--white); border: 1.5px solid var(--line); border-radius: 4px;
+    padding: 12px 16px; transition: border-color .2s; outline: none;
+    -webkit-appearance: none; appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--orange); }
+  .form-textarea { resize: vertical; min-height: 96px; line-height: 1.6; }
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23003366' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 16px center;
+    padding-right: 44px; cursor: pointer;
+  }
+  .form-hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+  .form-divider { height: 1px; background: var(--line); margin: 38px 0; }
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-submit-wrap { margin-top: 36px; }
+  .form-fine { font-size: 12px; color: var(--muted); margin-top: 16px; line-height: 1.6; }
+  .form-error {
+    display: none; margin-top: 18px; padding: 16px 18px;
+    border: 1.5px solid var(--orange); background: var(--tint);
+    font-size: 13.5px; color: var(--ink); line-height: 1.6; border-radius: 4px;
+  }
+  .form-error.active { display: block; }
+  .form-error a { color: var(--navy); font-weight: 600; }
+  .form-success { display: none; background: var(--navy); padding: 52px 42px; text-align: center; }
+  .form-success.active { display: block; }
+  .success-check { font-family: var(--hero); font-size: 64px; color: var(--orange); line-height: 1; margin-bottom: 14px; }
+  .success-title { font-family: var(--hero); font-size: 36px; color: var(--white); text-transform: uppercase; margin-bottom: 16px; line-height: 1; }
+  .success-body { font-size: 14px; color: #cfe0f2; line-height: 1.7; max-width: 440px; margin: 0 auto; }
+  .success-body a { color: var(--orange); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--navy-dark); border-top: 3px solid var(--orange);
+    padding: 28px 5%; display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-logo { font-family: var(--hero); font-size: 18px; color: var(--white); letter-spacing: .06em; text-transform: uppercase; }
+  .footer-logo span { color: var(--orange); }
+  .footer-copy { font-size: 12px; color: #6b8cae; }
+  .footer-link { font-size: 12px; color: var(--orange); text-decoration: none; }
+  .footer-link:hover { text-decoration: underline; }
+
+  /* RESPONSIVE */
+  @media (max-width: 860px) {
+    .capstone-grid { grid-template-columns: 1fr 1fr; }
+    .symptom-grid { grid-template-columns: 1fr 1fr; }
+    .facts-inner { grid-template-columns: 1fr 1fr; }
+    .fact:nth-child(2) { border-right: none; }
+    .fact:nth-child(1), .fact:nth-child(2) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 700px) {
+    section { padding: 60px 5%; }
+    .capstone-grid { grid-template-columns: 1fr; }
+    .symptom-grid { grid-template-columns: 1fr; }
+    .incl-grid { grid-template-columns: 1fr; }
+    .fit-grid { grid-template-columns: 1fr; }
+    .after-grid { grid-template-columns: 1fr; }
+    .price-box { padding: 32px 24px; }
+    .phase-row { grid-template-columns: 60px 1fr; gap: 16px; }
+    .phase-letter { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">The <span>SCALE</span> Method&trade;</div>
+  <div class="nav-links">
+    <a href="/index.html" class="nav-link">Home</a>
+    <a href="/system.html" class="nav-link">The System</a>
+    <a href="/30dayscalebook.html" class="nav-link">The Book</a>
+    <a href="/faq.html" class="nav-link">FAQ</a>
+  </div>
+  <a href="#apply" class="nav-cta">Apply Now &rsaquo;</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">The Founding Cohort &nbsp;|&nbsp; 10 Owners of $500K&ndash;$3M Businesses &nbsp;|&nbsp; Begins October 6</div>
+  <h1 class="hero-title">Your Business Isn&rsquo;t Stuck Everywhere. <span>One Part</span> of It Is Holding Everything Else Back.</h1>
+  <p class="hero-sub">If your established business generates <strong>$500,000&ndash;$3 million</strong> in annual revenue, spend 30 focused days identifying the real constraint, implementing the systems needed to address it, and measuring what changes &mdash; with the complete SCALE system and weekly guidance from T.M. Parish.</p>
+  <div class="hero-btns">
+    <a href="#apply" class="btn-primary">Apply for One of 10 Seats</a>
+    <a href="#how" class="btn-outline">See How It Works</a>
+  </div>
+  <div class="hero-support">Applications close <strong>September 25</strong> or when the founding cohort is full. &nbsp;&middot;&nbsp; <strong>$397</strong> upon acceptance.</div>
+</section>
+
+<!-- PHASE STRIP -->
+<div class="phase-strip">
+  <div class="phase-strip-inner">
+    <div class="ps-item"><span class="ps-letter">S</span><span class="ps-word">Strategy</span></div>
+    <div class="ps-item"><span class="ps-letter">C</span><span class="ps-word">Customer</span></div>
+    <div class="ps-item"><span class="ps-letter">A</span><span class="ps-word">Action</span></div>
+    <div class="ps-item"><span class="ps-letter">L</span><span class="ps-word">Leverage</span></div>
+    <div class="ps-item"><span class="ps-letter">E</span><span class="ps-word">Endurance</span></div>
+  </div>
+</div>
+
+<!-- KEY FACTS -->
+<div class="facts">
+  <div class="facts-inner">
+    <div class="fact">
+      <div class="fact-label">Cohort Size</div>
+      <div class="fact-value"><span>10</span> Owners</div>
+      <div class="fact-note">$500K&ndash;$3M in revenue</div>
+    </div>
+    <div class="fact">
+      <div class="fact-label">Investment</div>
+      <div class="fact-value">$<span>397</span></div>
+      <div class="fact-note">Paid in full after acceptance</div>
+    </div>
+    <div class="fact">
+      <div class="fact-label">Format</div>
+      <div class="fact-value">5 Live<br>Sessions</div>
+      <div class="fact-note">Plus guided daily implementation</div>
+    </div>
+    <div class="fact">
+      <div class="fact-label">Day 1 to Day 30</div>
+      <div class="fact-value">Oct 7 &ndash;<br>Nov 5</div>
+      <div class="fact-note">Kickoff Tuesday, October 6</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="wrap">
+    <div class="section-eyebrow">The Real Problem</div>
+    <h2 class="section-title">Growth Problems Are<br>Easy to Misdiagnose</h2>
+    <div class="rule"></div>
+    <p class="section-sub">Revenue has stalled. The owner is working constantly. Leads are inconsistent. Customers are not returning. Growth created more complexity instead of more freedom.</p>
+
+    <div class="symptom-grid">
+      <div class="symptom">Revenue has stalled or gone flat.</div>
+      <div class="symptom">You are working constantly and it never lets up.</div>
+      <div class="symptom">Leads come in bursts, not on a rhythm.</div>
+      <div class="symptom">Customers buy once and do not return.</div>
+      <div class="symptom">Growth added complexity, not freedom.</div>
+      <div class="symptom">Every important decision still runs through you.</div>
+    </div>
+
+    <p class="body-text">The natural response is to try more marketing, add another offer, hire someone, or work harder. <strong>But the visible problem is not always the real constraint.</strong></p>
+    <p class="body-text muted">A business can have a strong strategy and weak execution. It can generate customers but fail to retain them. It can grow revenue while running short of cash. It can appear successful while every important decision still depends on the owner.</p>
+
+    <div class="pullquote">Growth does not average your strengths.<br>The weakest system becomes the ceiling.</div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">The Diagnosis</div>
+    <h2 class="section-title">Find Where<br>Growth Is Breaking</h2>
+    <div class="rule"></div>
+    <p class="section-sub">The SCALE Method examines five connected areas of the business. You will begin with a baseline SCALE Score, work through all five phases in order, and retake the assessment at Day 30 to see where the business moved and what should happen next.</p>
+
+    <div class="phase-list">
+      <div class="phase-row">
+        <div class="phase-letter">S</div>
+        <div>
+          <div class="phase-name">Strategy</div>
+          <div class="phase-desc">Clear goals, a defined market, a meaningful competitive position, and an executable roadmap.</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-letter">C</div>
+        <div>
+          <div class="phase-name">Customer</div>
+          <div class="phase-desc">Customer experience, retention, trust, referrals, expansion, and customer economics.</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-letter">A</div>
+        <div>
+          <div class="phase-name">Action</div>
+          <div class="phase-desc">Repeatable marketing, sales, offers, partnerships, automation, and cash-flow discipline.</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-letter">L</div>
+        <div>
+          <div class="phase-name">Leverage</div>
+          <div class="phase-desc">Processes, delegation, team structure, efficiency, and reducing dependence on the owner.</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-letter">E</div>
+        <div>
+          <div class="phase-name">Endurance</div>
+          <div class="phase-desc">Authority, feedback, measurement, operating rhythm, and sustained progress.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPSTONES -->
+<section class="capstone-section">
+  <div class="wrap center">
+    <div class="section-eyebrow">What You Build</div>
+    <h2 class="section-title">You Will Not Leave With More Advice.<br>You Will Leave With <span style="color:var(--orange);">Five Working<br>Business Documents.</span></h2>
+    <div class="rule"></div>
+  </div>
+  <div class="wrap">
+    <div class="capstone-grid">
+      <div class="cap">
+        <div class="cap-tag">Phase S</div>
+        <div class="cap-title">The Strategy Blueprint</div>
+        <div class="cap-desc">Your goals, customer, differentiation, operating priorities, and Day 30 outcome.</div>
+      </div>
+      <div class="cap">
+        <div class="cap-tag">Phase C</div>
+        <div class="cap-title">The Customer Retention Playbook</div>
+        <div class="cap-desc">Your retention, personalization, proof, referral, expansion, and customer-metric systems.</div>
+      </div>
+      <div class="cap">
+        <div class="cap-tag">Phase A</div>
+        <div class="cap-title">The Revenue Engine Template</div>
+        <div class="cap-desc">Your repeatable campaign, sale-expansion map, partnership plays, automation, and cash-flow guardrails.</div>
+      </div>
+      <div class="cap">
+        <div class="cap-tag">Phase L</div>
+        <div class="cap-title">The Leverage Audit</div>
+        <div class="cap-desc">What you will stop, automate, and delegate, plus the longer-term plan and major safeguards.</div>
+      </div>
+      <div class="cap">
+        <div class="cap-tag">Phase E</div>
+        <div class="cap-title">The Endurance Scorecard</div>
+        <div class="cap-desc">Your brand authority, feedback loop, momentum rhythm, operating metrics, and next-cycle plan.</div>
+      </div>
+      <div class="cap">
+        <div class="cap-tag">Day 1 vs. Day 30</div>
+        <div class="cap-title">Your SCALE Score Comparison</div>
+        <div class="cap-desc">A phase-by-phase measure of where the business moved &mdash; and the most important constraint for the next cycle.</div>
+      </div>
+    </div>
+    <div class="capstone-foot">
+      <strong>These are not worksheets you file away.</strong> Each capstone consolidates a phase of work into a document your business actually runs on &mdash; the kind you hand to a team member, revisit next quarter, and update as the business changes.
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-eyebrow">The Process</div>
+    <h2 class="section-title">Thirty Days. Five Phases.<br>One Connected System.</h2>
+    <div class="rule"></div>
+    <p class="section-sub">Roughly 30&ndash;45 minutes of guided work per day, plus one 60-minute session each week.</p>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Take the SCALE Score and establish your starting point.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Choose one meaningful, measurable Day 30 outcome.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Complete approximately 30&ndash;45 minutes of guided work each day.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Put at least one real action into operation during every phase.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text">Bring discoveries, obstacles, and results into the weekly implementation sessions.</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-text">Consolidate each phase into a working capstone document.</div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-text">Retake the SCALE Score and build the next-cycle plan.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="cal-section">
+  <div class="wrap">
+    <div class="section-eyebrow">Weekly Guidance</div>
+    <h2 class="section-title">An Implementation Clinic,<br>Not a Lecture</h2>
+    <div class="rule"></div>
+    <p class="section-sub">Each session reviews the work, diagnoses where participants are stuck, pressure-tests decisions, and prepares the group for the next phase.</p>
+
+    <div class="cal-scroll">
+      <table class="cal">
+        <thead>
+          <tr><th>Session</th><th>Date</th><th>Time</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="session">Kickoff</td><td class="date">Tue, Oct 6</td><td class="date">12 p.m. ET</td><td>Baseline, initial diagnosis, Day 30 outcome, and Strategy preparation</td></tr>
+          <tr><td class="session">Session 2</td><td class="date">Tue, Oct 13</td><td class="date">12 p.m. ET</td><td>Strategy review and transition into Customer</td></tr>
+          <tr><td class="session">Session 3</td><td class="date">Tue, Oct 20</td><td class="date">12 p.m. ET</td><td>Customer review, midpoint adjustment, and transition into Action</td></tr>
+          <tr><td class="session">Session 4</td><td class="date">Tue, Oct 27</td><td class="date">12 p.m. ET</td><td>Revenue Engine review and transition into Leverage and Endurance</td></tr>
+          <tr><td class="session">Results</td><td class="date">Fri, Nov 6</td><td class="date">12 p.m. ET</td><td>Day 1 versus Day 30 results, next SCALE Cycle, and optional private support</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cal-note">All sessions begin at 12:00 p.m. Eastern and are held through Google Meet. Instructional portions are recorded for participant replay.</p>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">What&rsquo;s Included</div>
+    <h2 class="section-title">Everything Needed to Complete<br>the Full 90-Day SCALE System</h2>
+    <div class="rule"></div>
+
+    <div class="incl-grid">
+      <div class="incl"><span><em>Scale Your Business in 30 Days</em>, digital edition</span></div>
+      <div class="incl"><span>The 30-Day SCALE Workbook</span></div>
+      <div class="incl"><span>The 60-Day Compound Workbook &mdash; Days 31&ndash;90</span></div>
+      <div class="incl"><span>Three months of Ask The Book&trade; AI Advisor</span></div>
+      <div class="incl"><span>Five live, 60-minute implementation sessions</span></div>
+      <div class="incl"><span>One submitted question per participant each week, answered within two business days</span></div>
+      <div class="incl"><span>Weekly accountability check-ins and a Day 25 Leverage checkpoint</span></div>
+      <div class="incl"><span>Baseline and Day 30 measurement and results review</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="fit-section">
+  <div class="wrap">
+    <div class="section-eyebrow">Who This Is For</div>
+    <h2 class="section-title">Built for Owners of $500K&ndash;$3M<br>Businesses With a Real Constraint</h2>
+    <div class="rule"></div>
+
+    <div class="fit-grid">
+      <div class="fit-card yes">
+        <div class="fit-head">A Strong Fit If&hellip;</div>
+        <ul class="fit-list">
+          <li>Your business generated $500,000&ndash;$3 million in gross revenue during the most recent 12 months.</li>
+          <li>Growth has stalled, become inconsistent, become chaotic, or become too dependent on you.</li>
+          <li>You control or materially influence business decisions.</li>
+          <li>You are willing to examine the business honestly and act on what you find.</li>
+          <li>You can commit approximately 30&ndash;45 minutes per day for 30 days.</li>
+        </ul>
+      </div>
+      <div class="fit-card no">
+        <div class="fit-head">Not a Fit If&hellip;</div>
+        <ul class="fit-list">
+          <li>Your business has not yet acquired its first customers.</li>
+          <li>Your revenue falls outside the $500,000&ndash;$3 million range.</li>
+          <li>You are looking for a passive course rather than daily implementation.</li>
+          <li>You are unable to make or influence business decisions.</li>
+          <li>You are seeking guaranteed revenue or a done-for-you marketing service.</li>
+          <li>You are unwilling to measure the business honestly or complete the capstone work.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDING COHORT -->
+<section>
+  <div class="wrap center">
+    <div class="section-eyebrow">Why a Founding Cohort?</div>
+    <h2 class="section-title">Ten Owners. One Close Look<br>at How This Really Works.</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="founding-box">
+    <p class="body-text">The SCALE system is complete. <strong>This first guided cohort is intentionally limited to ten owners</strong> so the implementation experience can be closely observed, strengthened, and documented.</p>
+    <p class="body-text muted" style="margin-bottom:0;">Founding participants receive the complete 90-day system, weekly access to T.M. Parish during the Sprint, and the opportunity to help shape how future cohorts operate. In return, participants agree to complete the work and provide candid feedback. Public testimonials are optional and never required to be positive.</p>
+  </div>
+</section>
+
+<!-- INVESTMENT -->
+<section class="invest-section">
+  <div class="wrap center">
+    <div class="section-eyebrow">The Investment</div>
+    <h2 class="section-title">Founding Cohort<br>Investment</h2>
+    <div class="rule"></div>
+    <p class="section-sub">Applications are reviewed before payment so the cohort remains useful for everyone involved. Accepted applicants receive a private payment link and have 48 hours to reserve their seat.</p>
+
+    <div class="price-box">
+      <div class="price-eyebrow">Founding Cohort &mdash; 10 seats only</div>
+      <div class="price-amount">$<span>397</span></div>
+      <div class="price-note">Paid in full after acceptance</div>
+
+      <ul class="price-lines">
+        <li>Applications open September 8 and close September 25, or when ten qualified participants have paid.</li>
+        <li>Applications are reviewed on a rolling basis. You receive an answer within two business days.</li>
+        <li>Accepted applicants receive a private payment link. Payment is due within 48 hours to hold the seat.</li>
+        <li>Digital materials are delivered after payment. AI Advisor access begins October 6 so the included three months support the full 90-day system.</li>
+        <li>Remaining qualified applicants may join a short waitlist in case an accepted participant does not complete payment.</li>
+      </ul>
+
+      <a href="#apply" class="btn-primary">Apply for the Founding Cohort</a>
+      <div class="price-sub">Applications close September 25 or when all ten seats are filled.<br>Only ten paid participants will be admitted.</div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION -->
+<span id="apply" class="apply-anchor"></span>
+<section class="apply-section">
+  <div class="apply-inner">
+    <div class="section-eyebrow">The Application</div>
+    <h2 class="section-title">Apply for the<br>Founding Cohort</h2>
+    <div class="rule"></div>
+    <p class="apply-intro">The application is short and reviewed on a rolling basis. You will receive an answer within two business days. If accepted, you will receive a private payment link and have 48 hours to reserve your seat. Applying does not obligate you to anything.</p>
+
+    <form id="sprintForm">
+      <div class="form-section-label">About You</div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-name">Your Name <span>*</span></label>
+        <input class="form-input" type="text" id="f-name" name="Name" required placeholder="First and last name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-email">Your Email <span>*</span></label>
+        <input class="form-input" type="email" id="f-email" name="email" required placeholder="you@yourbusiness.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-company">Business Name &amp; Website</label>
+        <input class="form-input" type="text" id="f-company" name="Business Name and Website" placeholder="Optional, but it helps">
+      </div>
+
+      <div class="form-divider"></div>
+      <div class="form-section-label">Your Business</div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-what">What Your Business Does <span>*</span></label>
+        <textarea class="form-textarea" id="f-what" name="What the business does" required placeholder="What do you do, and who do you serve?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-revenue">Trailing 12-Month Gross Revenue <span>*</span></label>
+        <select class="form-select" id="f-revenue" name="Trailing 12-month gross revenue" required>
+          <option value="" disabled selected>Select a range</option>
+          <option>Under $500,000</option>
+          <option>$500,000 &ndash; $1 million</option>
+          <option>$1 million &ndash; $2 million</option>
+          <option>$2 million &ndash; $3 million</option>
+          <option>Over $3 million</option>
+        </select>
+        <div class="form-hint">The Sprint is built for established businesses between $500,000 and $3 million. This question confirms fit.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-authority">Decision Authority <span>*</span></label>
+        <select class="form-select" id="f-authority" name="Decision authority" required>
+          <option value="" disabled selected>Select one</option>
+          <option>I am the owner and final decision maker</option>
+          <option>I materially influence decisions but do not decide alone</option>
+          <option>I do not control business decisions</option>
+        </select>
+      </div>
+
+      <div class="form-divider"></div>
+      <div class="form-section-label">Your Situation</div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-constraint">The Constraint <span>*</span></label>
+        <textarea class="form-textarea" id="f-constraint" name="The constraint" required placeholder="What single thing is holding growth back right now?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-outcome">Your Day 30 Outcome <span>*</span></label>
+        <textarea class="form-textarea" id="f-outcome" name="Day 30 outcome" required placeholder="What would have to change in 30 days for this to be worth it?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-time">Time Commitment <span>*</span></label>
+        <select class="form-select" id="f-time" name="Time commitment" required>
+          <option value="" disabled selected>Select one</option>
+          <option>Yes &mdash; I can commit 30&ndash;45 minutes per day for 30 days</option>
+          <option>I am not sure</option>
+          <option>No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-source">How Did You Hear About the Sprint? <span>*</span></label>
+        <select class="form-select" id="f-source" name="Source" required>
+          <option value="" disabled selected>Select one</option>
+          <option>LinkedIn</option>
+          <option>Email from T.M. Parish</option>
+          <option>The book</option>
+          <option>the30dayscale.com</option>
+          <option>Referred by someone</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Honeypot: hidden from people, filled in by bots. Do not remove. -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="f-gotcha">Leave this field empty</label>
+        <input type="text" id="f-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form-submit-wrap">
+        <button type="submit" class="btn-primary">Submit My Application &rsaquo;</button>
+        <p class="form-fine">Applications are reviewed personally by T.M. Parish. You will hear back within two business days. Submitting an application does not guarantee a seat or obligate you to move forward.</p>
+        <div class="form-error" id="formError"></div>
+      </div>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="success-check">&check;</div>
+      <div class="success-title">Application Received</div>
+      <p class="success-body">Thank you. Every application is read personally. You will hear back within two business days, either way.<br><br>If accepted, you will receive a private payment link and have 48 hours to reserve one of the ten seats.<br><br>&mdash; T.M. Parish</p>
+    </div>
+  </div>
+</section>
+
+<!-- AFTER DAY 30 -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">Days 31&ndash;90</div>
+    <h2 class="section-title">What Happens<br>After Day 30</h2>
+    <div class="rule"></div>
+
+    <div class="after-grid">
+      <div class="after-card">
+        <div class="after-title">Keep Going On Your Own</div>
+        <div class="after-desc">Participants already receive the 60-Day Compound Workbook and three months of Ask The Book&trade;, so you can continue independently through Days 31&ndash;90 without buying anything else.</div>
+      </div>
+      <div class="after-card">
+        <div class="after-title">Private Advisory (Optional)</div>
+        <div class="after-desc">Owners who want individualized support may apply separately for T.M. Parish&rsquo;s private 60-day SCALE implementation engagement. Private advisory is optional and is not required to complete the system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author-section" id="about">
+  <div class="author-inner">
+    <div class="section-eyebrow">Who You&rsquo;ll Be Working With</div>
+    <h2 class="section-title">Built by an Operator,<br>Not a Business-Growth Spectator</h2>
+    <div class="author-rule"></div>
+    <p class="author-bio">T.M. Parish is an operator, strategist, and <strong>eight-time bestselling author</strong> who has built and led business systems across operations, marketing, sales, client delivery, administration, and growth. She created <strong>The SCALE Method</strong> to replace scattered business advice with a structured way to diagnose, implement, measure, refine, and compound.</p>
+    <div class="author-creds">
+      <span class="cred-pill orange">8&times; Bestselling Author</span>
+      <span class="cred-pill">Operator</span>
+      <span class="cred-pill">Strategist</span>
+      <span class="cred-pill">Systems Builder</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap-narrow">
+    <div class="section-eyebrow">Questions</div>
+    <h2 class="section-title">Frequently Asked<br>Questions</h2>
+    <div class="rule"></div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Does my business need to be a certain size?</summary>
+        <div class="faq-answer">Yes. The SCALE Method is designed for established businesses generating $500,000&ndash;$3 million in annual revenue. The application uses gross revenue from the most recent 12 months to confirm fit.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How much time should I expect?</summary>
+        <div class="faq-answer">Plan for approximately 30&ndash;45 minutes per day plus one 60-minute session each week. Some implementation actions may require additional business time.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I have to attend every session?</summary>
+        <div class="faq-answer">Live attendance is strongly recommended. Participants must attend at least four of the five sessions and complete all five capstones to be recorded as program completers.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What if I fall behind?</summary>
+        <div class="faq-answer">Resume rather than restarting. Submit the weekly check-in and identify where you became stuck so the most important work can be prioritized.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Are the sessions recorded?</summary>
+        <div class="faq-answer">Instructional portions will be recorded for participant replay. Sensitive participant-specific discussions may not be recorded.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is this individual consulting?</summary>
+        <div class="faq-answer">No. The Sprint provides group implementation guidance. It does not include private calls, unlimited messaging, or detailed review of every workbook page.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What is Ask The Book&trade;?</summary>
+        <div class="faq-answer">It is the SCALE AI Advisor. Participants can ask questions about the system, request examples for their industry, clarify exercises, and work through implementation decisions between sessions.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Will this increase my revenue in 30 days?</summary>
+        <div class="faq-answer">No particular financial result can be guaranteed. The Sprint is designed to help you diagnose constraints, implement business systems, take measurable action, and establish evidence of progress.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens to my business information?</summary>
+        <div class="faq-answer">Participant information remains confidential. Scores, quotes, and results are not used publicly without explicit permission.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What is the refund policy?</summary>
+        <div class="faq-answer">Because the purchase includes digital materials and reserves one of ten live seats, payment becomes nonrefundable after the materials are accessed or 48 hours after purchase, whichever occurs first. If the Sprint is canceled by T.M. Parish, participants receive a full refund.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I continue after the Sprint?</summary>
+        <div class="faq-answer">Yes. The included Compound Workbook and AI Advisor carry the system through Day 90. Private 60-day implementation support is also available separately for qualified owners who want individualized guidance.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2 class="section-title">Stop Guessing at What Is Holding the <span>Business Back.</span></h2>
+  <p class="final-sub">Apply for one of ten founding seats and spend 30 focused days fixing the constraint.</p>
+  <div style="position:relative;">
+    <a href="#apply" class="btn-primary">Apply for the 30-Day SCALE Sprint</a>
+  </div>
+  <div class="final-support">Begins <strong>October 6</strong> at 12:00 p.m. Eastern. &nbsp;&middot;&nbsp; <strong>$397</strong> upon acceptance.</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">The <span>SCALE</span> Method&trade;</div>
+  <div class="footer-copy">&copy; T.M. Parish. All rights reserved.</div>
+  <a href="mailto:hello@the30dayscale.com" class="footer-link">hello@the30dayscale.com</a>
+</footer>
+
+<script>
+  /* ───────────────────────────────────────────────────────────────
+     Formspree endpoint for "The SCALE Method Sprint" form.
+     This is the Sprint form only — Private Advisory applications go
+     to a separate endpoint on the /advisory page. Do not swap them.
+     If a submission fails, the applicant is told to email
+     hello@the30dayscale.com instead, and that counts as an
+     application.
+     ─────────────────────────────────────────────────────────────── */
+  var FORMSPREE_ENDPOINT = 'https://formspree.io/f/mvkorjlg';
+  var SUPPORT_EMAIL = 'hello@the30dayscale.com';
+
+  (function () {
+    var form = document.getElementById('sprintForm');
+    var success = document.getElementById('formSuccess');
+    var errorBox = document.getElementById('formError');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var defaultLabel = submitBtn.innerHTML;
+
+    function showSuccess() {
+      form.style.display = 'none';
+      success.classList.add('active');
+      window.scrollTo({ top: success.offsetTop - 120, behavior: 'smooth' });
+    }
+
+    function showError() {
+      errorBox.innerHTML =
+        'That did not go through. Please try again &mdash; or send your answers directly to ' +
+        '<a href="mailto:' + SUPPORT_EMAIL +
+        '?subject=30-Day%20SCALE%20Sprint%20Application">' + SUPPORT_EMAIL +
+        '</a> and it will be treated as a complete application.';
+      errorBox.classList.add('active');
+      submitBtn.innerHTML = defaultLabel;
+      submitBtn.disabled = false;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorBox.classList.remove('active');
+
+      /* Honeypot — invisible to people, filled in by bots.
+         Show the bot a success screen and send nothing. */
+      if (form.querySelector('[name="_gotcha"]').value !== '') {
+        showSuccess();
+        return;
+      }
+
+      submitBtn.innerHTML = 'Submitting&hellip;';
+      submitBtn.disabled = true;
+
+      var data = {};
+      new FormData(form).forEach(function (value, key) { data[key] = value; });
+      data._subject = 'Sprint application — ' + (data.Name || 'new applicant');
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { res.ok ? showSuccess() : showError(); })
+        .catch(showError);
+    });
+  })();
+</script>
+
+</body>
+</html>
